@@ -112,4 +112,105 @@ window.addEventListener('appinstalled',()=>{installBanner?.classList.remove('sho
 if(isStandalone){installBanner?.classList.remove('show');document.getElementById('navInstallBtn')?.remove();}
 if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 
-</script></body></html>
+</script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
+<script>
+// Drawz Poker League — live Cloud Firestore connection
+const firebaseConfig = {
+  apiKey: "AIzaSyATsnmj-Y206mh8BCZqK1ZeBnkJKLECkPI",
+  authDomain: "drawz-poker-league.firebaseapp.com",
+  projectId: "drawz-poker-league",
+  storageBucket: "drawz-poker-league.firebasestorage.app",
+  messagingSenderId: "405551721329",
+  appId: "1:405551721329:web:88780b37f34d4e7ac6a4d0"
+};
+
+firebase.initializeApp(firebaseConfig);
+const cloudDb = firebase.firestore();
+let cloudPlayersLoaded = false;
+
+function cloudStandingRows(){
+  return db.players.map(p => ({
+    ...p,
+    points: Number(p.points || 0),
+    played: Number(p.gamesPlayed || 0),
+    wins: Number(p.wins || 0),
+    podiums: Number(p.podiums || 0),
+    avg: p.averageFinish == null ? null : Number(p.averageFinish)
+  })).sort((a,b) => b.points-a.points || b.wins-a.wins || a.username.localeCompare(b.username));
+}
+
+function setCloudStatus(message, isError=false){
+  let box=document.getElementById('firebaseStatus');
+  if(!box){
+    box=document.createElement('div');
+    box.id='firebaseStatus';
+    box.className='notice';
+    box.style.margin='12px 0';
+    const admin=document.getElementById('admin');
+    if(admin) admin.insertBefore(box, admin.children[1] || null);
+  }
+  box.style.borderLeftColor=isError?'#ff5353':'#7cff00';
+  box.textContent=message;
+}
+
+cloudDb.collection('players').onSnapshot(snapshot => {
+  db.players = snapshot.docs.map(doc => {
+    const p=doc.data() || {};
+    const name=String(p.name || p.username || 'Unnamed Player');
+    return {
+      id: doc.id,
+      username: String(p.username || name),
+      displayName: String(p.displayName || name),
+      rating: Number(p.rating || 1500),
+      points: Number(p.points || 0),
+      gamesPlayed: Number(p.gamesPlayed || p.gamesplayed || 0),
+      wins: Number(p.wins || 0),
+      podiums: Number(p.podiums || 0),
+      averageFinish: p.averageFinish ?? null,
+      cloud: true
+    };
+  });
+  standings = cloudStandingRows;
+  cloudPlayersLoaded = true;
+  setCloudStatus(`Firebase connected — ${db.players.length} live player${db.players.length===1?'':'s'} loaded.`);
+  render();
+}, error => {
+  console.error('Firestore players error', error);
+  setCloudStatus('Firebase could not load the players collection: '+error.message, true);
+});
+
+// Add players from the existing Admin form directly to Firestore.
+const cloudPlayerForm=document.querySelector('#playerForm');
+if(cloudPlayerForm){
+  cloudPlayerForm.onsubmit=async event => {
+    event.preventDefault();
+    const form=new FormData(event.target);
+    const username=String(form.get('username') || '').trim();
+    const displayName=String(form.get('displayName') || '').trim();
+    if(!username || !displayName) return alert('Enter both the ClubGG nickname and display name.');
+    try{
+      const duplicate=await cloudDb.collection('players').where('username','==',username).limit(1).get();
+      if(!duplicate.empty) return alert('That ClubGG nickname already exists.');
+      await cloudDb.collection('players').add({
+        username,
+        name: displayName,
+        displayName,
+        points: 0,
+        gamesPlayed: 0,
+        wins: 0,
+        podiums: 0,
+        rating: 1500,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      event.target.reset();
+      alert('Player added to the live Firebase database.');
+    }catch(error){
+      console.error(error);
+      alert('Could not add the player: '+error.message);
+    }
+  };
+}
+</script>
+</body></html>
