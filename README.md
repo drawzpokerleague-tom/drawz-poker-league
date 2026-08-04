@@ -1,5 +1,5 @@
-# Drawz Poker League
+# Drawz Poker League install-button fix
 
-Official Drawz Poker League mobile web app for ClubGG club ID 490160.
+Upload all files in this folder to the root of the GitHub repository and replace the existing files.
 
-Hosted on Netlify and installable on Android or iPhone as a Progressive Web App.
+This update removes a duplicate Install button ID that prevented the visible button from responding and increments the service-worker cache so devices receive the corrected version.
