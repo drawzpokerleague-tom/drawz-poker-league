@@ -14,6 +14,17 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 90% 0,rgba(124,255,0,.12),transparent 25%),linear-gradient(180deg,#000,#070707 55%,#000);color:var(--text);font:15px Arial,sans-serif}button,input,select,textarea{font:inherit}.wrap{max-width:1120px;margin:auto;padding:20px}.nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.97);border-bottom:1px solid var(--lime);box-shadow:0 0 18px rgba(124,255,0,.15)}.navin{max-width:1120px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}.brand{font-size:20px;font-weight:900;color:var(--lime);margin-right:auto;text-shadow:0 0 13px rgba(124,255,0,.5)}.nav button{background:none;color:var(--muted);border:0;border-bottom:2px solid transparent;padding:8px 3px;cursor:pointer}.nav button.active,.nav button:hover{color:var(--lime);border-bottom-color:var(--lime)}.hero{padding:28px 0 22px}.hero h1{font-size:clamp(38px,8vw,72px);line-height:.95;margin:10px 0 14px;text-shadow:0 0 25px rgba(124,255,0,.15)}.badge{display:inline-block;background:#101010;color:var(--lime);border:1px solid var(--lime);border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line-soft);padding:18px;border-radius:17px;box-shadow:0 8px 30px rgba(0,0,0,.48),inset 0 0 0 1px rgba(124,255,0,.03)}.card:hover{border-color:var(--lime);box-shadow:0 0 18px rgba(124,255,0,.1),0 8px 30px rgba(0,0,0,.55)}.stat{font-size:34px;color:var(--lime);font-weight:900;text-shadow:0 0 12px rgba(124,255,0,.28)}.countdown{font-size:clamp(24px,6vw,42px);letter-spacing:2px}.btn{border:1px solid var(--lime);border-radius:10px;padding:10px 14px;background:var(--lime);color:#000;font-weight:900;cursor:pointer;box-shadow:0 0 12px rgba(124,255,0,.14)}.btn:hover{background:var(--lime2)}.btn.alt{background:#050505;color:var(--lime)}.btn.red{background:#190000;color:#fff;border-color:var(--danger)}.btn.small{padding:7px 10px;font-size:12px}table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}th,td{padding:12px;text-align:left;border-bottom:1px solid #242424}th{color:var(--lime);font-size:12px;text-transform:uppercase;background:#050505}tbody tr:nth-child(even){background:#0d0d0d}tbody tr:hover{background:#151515}tr:last-child td{border:0}.rank{color:var(--lime);font-weight:900;font-size:18px}.view{display:none}.view.active{display:block}h1,h2,h3{color:#fff}h2{margin-top:30px}label{display:block;margin:10px 0;font-weight:700}label small{display:block;color:var(--muted);font-weight:400;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid var(--line-soft);border-radius:9px;background:#050505;color:#fff;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(124,255,0,.12)}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.empty{padding:25px;text-align:center;color:var(--muted)}.notice{padding:12px;border-left:4px solid var(--lime);background:#0d0d0d;border-radius:8px;color:#e8e8e8}.footer{text-align:center;color:var(--muted);padding:35px;border-top:1px solid #171717}.modal{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}.modalbox{max-width:620px;max-height:90vh;overflow:auto;width:100%;background:#090909;border:1px solid var(--lime);border-radius:16px;padding:20px;box-shadow:0 0 36px rgba(124,255,0,.15)}.podium1{color:var(--gold)}.podium2{color:var(--silver)}.podium3{color:var(--bronze)}.achievement{display:inline-block;border:1px solid var(--line-soft);border-radius:999px;padding:5px 9px;margin:3px;color:var(--lime);background:#070707}.announcement{border-left:3px solid var(--lime);padding-left:12px;margin:12px 0}.bar{height:8px;background:#222;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--lime)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.tabs button{padding:8px 12px;border-radius:999px;border:1px solid var(--line-soft);background:#050505;color:var(--muted)}.tabs button.active{color:#000;background:var(--lime);border-color:var(--lime)}
 .install-banner{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#090909;border:1px solid var(--lime);border-radius:14px;padding:12px;box-shadow:0 0 28px rgba(124,255,0,.2)}.install-banner.show{display:flex;gap:10px;align-items:center}.install-banner .btn{margin-left:auto;white-space:nowrap}
 @media(max-width:700px){.wrap{padding:14px}.navin{padding:11px 14px;overflow-x:auto;flex-wrap:nowrap}.brand{min-width:max-content}.nav button{min-width:max-content}th,td{padding:8px;font-size:12px}.hide-sm{display:none}.hero{padding-top:22px}}
+
+.admin-locked > :not(h1):not(#authPanel){display:none!important}
+#authPanel{margin:14px 0 22px}
+.auth-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.auth-status{font-weight:800;color:var(--lime)}
+.player-admin-row{display:grid;grid-template-columns:1.5fr repeat(3,minmax(80px,.65fr)) auto;gap:8px;align-items:end;padding:12px 0;border-bottom:1px solid #252525}
+.player-admin-row:last-child{border-bottom:0}
+.player-admin-row label{margin:0}
+.player-admin-row .actions{align-self:end}
+@media(max-width:760px){.player-admin-row{grid-template-columns:1fr 1fr}.player-admin-row .player-name{grid-column:1/-1}.player-admin-row .actions{grid-column:1/-1}}
+
 </style></head>
 <body>
 <nav class="nav"><div class="navin"><div class="brand"><img src="dpl-logo.png" alt="DPL logo" style="width:34px;height:34px;border-radius:50%;vertical-align:middle;margin-right:8px">DRAWZ POKER LEAGUE</div><button data-view="home" class="active">Home</button><button data-view="leaderboard">Standings</button><button data-view="rating">Skill Rating</button><button data-view="schedule">Schedule</button><button data-view="players">Players</button><button data-view="hall">Hall of Fame</button><button data-view="admin">Admin</button><button id="navInstallBtn" class="btn small" type="button">Install App</button></div></nav>
@@ -24,7 +35,7 @@
 <section id="schedule" class="view"><h1>Tournament Schedule</h1><div id="scheduleGrid" class="grid"></div></section>
 <section id="players" class="view"><h1>Players</h1><div id="playerGrid" class="grid"></div></section>
 <section id="hall" class="view"><h1>Hall of Fame</h1><div id="hallGrid" class="grid"></div><h2>Monthly Champions</h2><div id="championHistory"></div></section>
-<section id="admin" class="view"><h1>Admin Control Center</h1><div class="notice">Prototype data is saved only in this browser. Export a backup regularly.</div><h2>League Dashboard</h2><div id="adminStats" class="grid"></div><div class="grid"><form id="playerForm" class="card"><h2>Add Player</h2><label><small>ClubGG nickname</small><input name="username" required></label><label><small>Display name</small><input name="displayName" required></label><button class="btn">Add player</button></form><form id="tournamentForm" class="card"><h2>Create Tournament</h2><label><small>Title</small><input name="title" value="Drawz Poker League Daily" required></label><label><small>Date and time</small><input type="datetime-local" name="startsAt" required></label><div class="row"><label><small>ClubGG Club ID</small><input name="clubId" value="490160"></label><label><small>Game code / table ID</small><input name="externalId"></label></div><label><small>Password or join note</small><input name="password"></label><button class="btn">Create tournament</button></form></div>
+<section id="admin" class="view admin-locked"><h1>Admin Control Center</h1><div id="authPanel" class="card"><h2 style="margin-top:0">Administrator Sign-In</h2><div id="signedOutBox"><p class="muted">Sign in with the administrator email and password you created in Firebase.</p><form id="adminLoginForm" class="auth-grid"><label><small>Email</small><input type="email" name="email" autocomplete="username" required></label><label><small>Password</small><input type="password" name="password" autocomplete="current-password" required></label><div class="actions"><button class="btn" type="submit">Sign In</button></div></form></div><div id="signedInBox" hidden><p class="auth-status">Signed in as <span id="adminEmail"></span></p><button id="adminSignOutBtn" class="btn alt" type="button">Sign Out</button></div><div id="authMessage" class="muted" style="margin-top:10px"></div></div><div class="notice">Prototype data is saved only in this browser. Export a backup regularly.</div><h2>League Dashboard</h2><div id="adminStats" class="grid"></div><div class="grid"><form id="playerForm" class="card"><h2>Add Player</h2><label><small>ClubGG nickname</small><input name="username" required></label><label><small>Display name</small><input name="displayName" required></label><button class="btn">Add player</button></form><form id="tournamentForm" class="card"><h2>Create Tournament</h2><label><small>Title</small><input name="title" value="Drawz Poker League Daily" required></label><label><small>Date and time</small><input type="datetime-local" name="startsAt" required></label><div class="row"><label><small>ClubGG Club ID</small><input name="clubId" value="490160"></label><label><small>Game code / table ID</small><input name="externalId"></label></div><label><small>Password or join note</small><input name="password"></label><button class="btn">Create tournament</button></form></div>
 <div class="grid"><form id="announcementForm" class="card"><h2>Post Announcement</h2><label><small>Headline</small><input name="title" required></label><label><small>Message</small><textarea name="body" rows="4" required></textarea></label><button class="btn">Publish</button></form><form id="settingsForm" class="card"><h2>League Settings</h2><label><small>League name</small><input name="leagueName"></label><label><small>Default Club ID</small><input name="clubId" value="490160"></label><label><small>Best results counted per month</small><input type="number" min="1" max="31" name="bestCount"></label><button class="btn">Save settings</button></form></div>
 <h2>Enter Results Manually</h2><form id="resultsForm" class="card"><label><small>Tournament</small><select name="tournamentId" required></select></label><label><small>One exact ClubGG nickname per line, winner first</small><textarea name="results" rows="10" required></textarea></label><button class="btn">Calculate points, rating and publish</button></form>
 <h2>Import ClubGG Results</h2><div class="card"><p class="muted">Choose a ClubGG CSV export or administrator-prepared CSV. The prototype looks for columns such as nickname/player/name and finish/rank/position. Review the detected finishing order before publishing.</p><input id="csvFile" type="file" accept=".csv,text/csv"><div id="csvPreview" style="margin-top:12px"></div></div>
@@ -115,6 +126,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventL
 </script>
 <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-auth-compat.js"></script>
 <script>
 // Drawz Poker League — live Cloud Firestore connection
 const firebaseConfig = {
@@ -176,6 +188,7 @@ cloudDb.collection('players').onSnapshot(snapshot => {
   cloudPlayersLoaded = true;
   setCloudStatus(`Firebase connected — ${db.players.length} live player${db.players.length===1?'':'s'} loaded.`);
   render();
+  renderLivePlayerManager();
 }, error => {
   console.error('Firestore players error', error);
   setCloudStatus('Firebase could not load the players collection: '+error.message, true);
@@ -212,5 +225,110 @@ if(cloudPlayerForm){
     }
   };
 }
+
+
+const auth = firebase.auth();
+const adminSection = document.getElementById('admin');
+const signedOutBox = document.getElementById('signedOutBox');
+const signedInBox = document.getElementById('signedInBox');
+const adminEmailEl = document.getElementById('adminEmail');
+const authMessage = document.getElementById('authMessage');
+const livePlayerManager = document.getElementById('livePlayerManager');
+
+function authNotice(message, isError=false){
+  authMessage.textContent = message || '';
+  authMessage.style.color = isError ? '#ff7777' : '#b8b8b8';
+}
+
+document.getElementById('adminLoginForm')?.addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = new FormData(event.target);
+  const email = String(form.get('email') || '').trim();
+  const password = String(form.get('password') || '');
+  authNotice('Signing in…');
+  try{
+    await auth.signInWithEmailAndPassword(email, password);
+    event.target.reset();
+    authNotice('');
+  }catch(error){
+    console.error(error);
+    authNotice('Sign-in failed. Check the email and password and try again.', true);
+  }
+});
+
+document.getElementById('adminSignOutBtn')?.addEventListener('click', async () => {
+  await auth.signOut();
+});
+
+auth.onAuthStateChanged(user => {
+  const signedIn = !!user;
+  adminSection?.classList.toggle('admin-locked', !signedIn);
+  if(signedOutBox) signedOutBox.hidden = signedIn;
+  if(signedInBox) signedInBox.hidden = !signedIn;
+  if(adminEmailEl) adminEmailEl.textContent = user?.email || '';
+  authNotice(signedIn ? 'Administrator access is active.' : 'You must sign in before making changes.');
+  renderLivePlayerManager();
+});
+
+function renderLivePlayerManager(){
+  if(!livePlayerManager) return;
+  if(!auth.currentUser){
+    livePlayerManager.innerHTML='<div class="empty">Sign in to manage players.</div>';
+    return;
+  }
+  const rows = cloudStandingRows();
+  if(!rows.length){
+    livePlayerManager.innerHTML='<div class="empty">No players have been added.</div>';
+    return;
+  }
+  livePlayerManager.innerHTML = rows.map(player => `
+    <form class="player-admin-row" data-player-id="${esc(player.id)}">
+      <label class="player-name"><small>Player</small><input name="displayName" value="${esc(player.displayName || player.username)}" required></label>
+      <label><small>Points</small><input type="number" name="points" value="${Number(player.points||0)}" required></label>
+      <label><small>Played</small><input type="number" min="0" name="gamesPlayed" value="${Number(player.gamesPlayed||0)}" required></label>
+      <label><small>Wins</small><input type="number" min="0" name="wins" value="${Number(player.wins||0)}" required></label>
+      <div class="actions">
+        <button class="btn small" type="submit">Save</button>
+        <button class="btn red small delete-live-player" type="button">Delete</button>
+      </div>
+    </form>
+  `).join('');
+
+  livePlayerManager.querySelectorAll('.player-admin-row').forEach(form => {
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if(!auth.currentUser) return alert('Please sign in first.');
+      const id = form.dataset.playerId;
+      const data = new FormData(form);
+      try{
+        await cloudDb.collection('players').doc(id).update({
+          name: String(data.get('displayName') || '').trim(),
+          displayName: String(data.get('displayName') || '').trim(),
+          points: Number(data.get('points') || 0),
+          gamesPlayed: Number(data.get('gamesPlayed') || 0),
+          wins: Number(data.get('wins') || 0),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('Player updated.');
+      }catch(error){
+        console.error(error);
+        alert('Could not update the player: ' + error.message);
+      }
+    });
+    form.querySelector('.delete-live-player')?.addEventListener('click', async () => {
+      if(!auth.currentUser) return alert('Please sign in first.');
+      const id = form.dataset.playerId;
+      const playerName = form.querySelector('[name="displayName"]')?.value || 'this player';
+      if(!confirm(`Delete ${playerName}? This cannot be undone.`)) return;
+      try{
+        await cloudDb.collection('players').doc(id).delete();
+      }catch(error){
+        console.error(error);
+        alert('Could not delete the player: ' + error.message);
+      }
+    });
+  });
+}
+
 </script>
 </body></html>

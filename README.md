@@ -1,14 +1,19 @@
-# Drawz Poker League — Firebase Live Update
+# Drawz Poker League — Admin Login Update
 
-This release connects the public website to the Firebase Cloud Firestore `players` collection.
+This update adds:
 
-## What is live now
-- The Players and Standings pages load the `players` collection in real time.
-- The existing Admin > Add Player form adds a player directly to Firestore.
-- Updates made in Firebase appear on every visitor’s device without redeploying.
+- Firebase email/password administrator sign-in
+- An admin-only player editor
+- Add, edit, and delete player controls
+- Public read-only standings
+- A Firestore rules file named `FIRESTORE-RULES.txt`
 
-## Upload
-Upload every file in this folder to the root of the GitHub repository and replace the existing files. Commit directly to `main`. Netlify will deploy automatically.
+## Deployment order
 
-## Important
-Firestore test-mode rules expire. Before inviting the public to create accounts or edit data, add Firebase Authentication and secure Firestore rules.
+1. Upload the website files to the GitHub repository and let Netlify publish them.
+2. Test signing in on the Admin page.
+3. In Firebase > Firestore Database > Rules, paste the contents of
+   `FIRESTORE-RULES.txt` and publish them.
+
+Do not upload `FIRESTORE-RULES.txt` expecting Netlify to apply it automatically.
+It is included as a reference for the Firebase Rules editor.
