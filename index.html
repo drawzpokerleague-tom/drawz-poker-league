@@ -16,7 +16,7 @@
 @media(max-width:700px){.wrap{padding:14px}.navin{padding:11px 14px;overflow-x:auto;flex-wrap:nowrap}.brand{min-width:max-content}.nav button{min-width:max-content}th,td{padding:8px;font-size:12px}.hide-sm{display:none}.hero{padding-top:22px}}
 </style></head>
 <body>
-<nav class="nav"><div class="navin"><div class="brand"><img src="dpl-logo.png" alt="DPL logo" style="width:34px;height:34px;border-radius:50%;vertical-align:middle;margin-right:8px">DRAWZ POKER LEAGUE</div><button data-view="home" class="active">Home</button><button data-view="leaderboard">Standings</button><button data-view="rating">Skill Rating</button><button data-view="schedule">Schedule</button><button data-view="players">Players</button><button data-view="hall">Hall of Fame</button><button data-view="admin">Admin</button></div></nav>
+<nav class="nav"><div class="navin"><div class="brand"><img src="dpl-logo.png" alt="DPL logo" style="width:34px;height:34px;border-radius:50%;vertical-align:middle;margin-right:8px">DRAWZ POKER LEAGUE</div><button data-view="home" class="active">Home</button><button data-view="leaderboard">Standings</button><button data-view="rating">Skill Rating</button><button data-view="schedule">Schedule</button><button data-view="players">Players</button><button data-view="hall">Hall of Fame</button><button data-view="admin">Admin</button><button id="navInstallBtn" class="btn small" type="button">Install App</button></div></nav>
 <main class="wrap">
 <section id="home" class="view active"><div class="hero"><span class="badge">FREE CLUBGG LEAGUE</span><h1>Play daily.<br>Climb the rankings.</h1><p class="muted">ClubGG handles the poker tables. Drawz Poker League handles registration, schedules, standings, ratings, achievements, and league history.</p><div class="card" style="margin-top:18px;display:flex;align-items:center;gap:14px"><img src="dpl-logo.png" alt="Drawz Poker League logo" style="width:76px;height:76px;border-radius:50%;border:2px solid #7CFC00"><div><b style="font-size:1.1rem">Drawz Poker League on ClubGG</b><div class="muted">Club ID: <strong style="color:#7CFC00">490160</strong></div><div class="muted">Free daily No-Limit Hold’em league tournaments</div></div></div></div><div id="announcementBox"></div><div id="todayBox"></div><div id="homeCards" class="grid"></div><h2>Top 5 this month</h2><div id="homeTable"></div></section>
 <section id="leaderboard" class="view"><h1>Monthly Standings</h1><p class="muted">Best 20 scores count. Ties break by wins, then podium finishes.</p><div id="leaderTable"></div></section>
@@ -31,6 +31,8 @@
 <h2>Data Tools</h2><div class="card actions"><button id="exportBtn" class="btn alt" type="button">Export Backup</button><label class="btn alt" style="margin:0;cursor:pointer">Import Backup<input id="importFile" type="file" accept="application/json" hidden></label><button id="demoBtn" class="btn alt" type="button">Load Demo Data</button><button id="archiveBtn" class="btn alt" type="button">Archive Month</button><button id="resetBtn" class="btn red" type="button">Erase All Data</button></div></section>
 </main><div class="footer">Free play only • No entry fees • No wagering</div>
 <div id="installBanner" class="install-banner"><div><strong style="color:#7cff00">Install Drawz Poker League</strong><div class="muted" style="font-size:12px">Add the app to your home screen for full-screen access.</div></div><button id="installBtn" class="btn small">Install</button><button id="dismissInstall" class="btn alt small">Not now</button></div>
+<div id="installBanner" class="install-banner show"><div><b>Install Drawz Poker League</b><div class="muted">Install it on your phone for full-screen access.</div></div><button id="installBtn" class="btn">Install</button><button id="dismissInstall" class="btn alt">Later</button></div>
+<div id="installHelp" class="modal"><div class="modalbox"><h2>Install Drawz Poker League</h2><div id="installHelpText"></div><div class="actions" style="margin-top:18px"><button id="closeInstallHelp" class="btn">Got it</button></div></div></div>
 <div id="playerModal" class="modal"><div class="modalbox"><div class="actions" style="justify-content:space-between"><h2 id="modalTitle" style="margin:0"></h2><button id="closeModal" class="btn alt">Close</button></div><div id="modalBody"></div></div></div>
 <script>
 const KEY='drawzPokerLeagueClubGGV3';
@@ -82,10 +84,33 @@ document.querySelector('#demoBtn').onclick=()=>{if(db.players.length&&!confirm('
 normalize();render();setInterval(()=>{const el=document.querySelector('#countdown'),t=nextTournament();if(el&&t)el.textContent=countdownText(t)},1000);
 
 let deferredInstallPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;document.getElementById('installBanner')?.classList.add('show');});
-document.getElementById('installBtn')?.addEventListener('click',async()=>{if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;document.getElementById('installBanner')?.classList.remove('show');});
-document.getElementById('dismissInstall')?.addEventListener('click',()=>document.getElementById('installBanner')?.classList.remove('show'));
-window.addEventListener('appinstalled',()=>document.getElementById('installBanner')?.classList.remove('show'));
+const installBanner=document.getElementById('installBanner');
+const installHelp=document.getElementById('installHelp');
+const installHelpText=document.getElementById('installHelpText');
+const isStandalone=window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+function installationInstructions(){
+  const ua=navigator.userAgent.toLowerCase();
+  if(/iphone|ipad|ipod/.test(ua)) return '<p>On iPhone or iPad:</p><ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button.</li><li>Tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol>';
+  return '<p>On Android:</p><ol><li>Open this page in <b>Google Chrome</b>.</li><li>Tap Chrome’s <b>three-dot menu</b>.</li><li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Confirm the installation.</li></ol><p class="muted">Links opened inside Messages, Facebook, Gmail, or another app may use an in-app browser. Choose <b>Open in Chrome</b> first.</p>';
+}
+function showInstallHelp(){installHelpText.innerHTML=installationInstructions();installHelp.classList.add('open');}
+async function requestInstall(){
+  if(isStandalone){alert('Drawz Poker League is already installed on this device.');return;}
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    const result=await deferredInstallPrompt.userChoice;
+    if(result.outcome==='accepted') installBanner?.classList.remove('show');
+    deferredInstallPrompt=null;
+  } else showInstallHelp();
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;if(!isStandalone)installBanner?.classList.add('show');});
+document.getElementById('installBtn')?.addEventListener('click',requestInstall);
+document.getElementById('navInstallBtn')?.addEventListener('click',requestInstall);
+document.getElementById('dismissInstall')?.addEventListener('click',()=>installBanner?.classList.remove('show'));
+document.getElementById('closeInstallHelp')?.addEventListener('click',()=>installHelp?.classList.remove('open'));
+installHelp?.addEventListener('click',e=>{if(e.target===installHelp)installHelp.classList.remove('open')});
+window.addEventListener('appinstalled',()=>{installBanner?.classList.remove('show');document.getElementById('navInstallBtn')?.remove();});
+if(isStandalone){installBanner?.classList.remove('show');document.getElementById('navInstallBtn')?.remove();}
 if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 
 </script></body></html>
