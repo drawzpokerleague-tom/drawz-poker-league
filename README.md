@@ -16,3 +16,7 @@ This package adds:
 3. After play ends, open Admin > Quick Results.
 4. Paste one ClubGG nickname per line in finishing order.
 5. Submit once.
+
+
+## Mobile standings fix
+On screens 700px wide or smaller, standings automatically become stacked cards so every statistic fits without horizontal scrolling.

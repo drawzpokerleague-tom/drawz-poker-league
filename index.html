@@ -41,6 +41,75 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 .profile-history{margin-top:18px}.profile-result{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #282828}
 @media(max-width:600px){.mini-stats{grid-template-columns:1fr 1fr}.history-row{grid-template-columns:36px 1fr auto}.modal-card{padding:20px 15px}}
 
+
+/* Mobile standings: show all statistics without horizontal scrolling */
+@media(max-width:700px){
+  #standingsTable{overflow:visible}
+  #standingsTable table,
+  #standingsTable thead,
+  #standingsTable tbody,
+  #standingsTable tr,
+  #standingsTable th,
+  #standingsTable td{display:block;width:100%}
+  #standingsTable thead{display:none}
+  #standingsTable table{border:0;background:transparent}
+  #standingsTable tbody{display:grid;gap:12px}
+  #standingsTable tr{
+    position:relative;
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr);
+    gap:8px 10px;
+    padding:14px;
+    border:1px solid #2a2a2a;
+    border-radius:16px;
+    background:#0c0c0c;
+  }
+  #standingsTable td{
+    border:0;
+    padding:0;
+    min-width:0;
+  }
+  #standingsTable td:nth-child(1){
+    grid-column:1;
+    grid-row:1 / span 2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    font-size:18px;
+    font-weight:800;
+  }
+  #standingsTable td:nth-child(2){
+    grid-column:2;
+    grid-row:1;
+  }
+  #standingsTable td:nth-child(n+3){
+    grid-column:2;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:10px;
+    padding-top:7px;
+    border-top:1px solid #242424;
+    font-weight:800;
+  }
+  #standingsTable td:nth-child(3)::before{content:"Points"}
+  #standingsTable td:nth-child(4)::before{content:"Played"}
+  #standingsTable td:nth-child(5)::before{content:"Wins"}
+  #standingsTable td:nth-child(6)::before{content:"Average finish"}
+  #standingsTable td:nth-child(7)::before{content:"Final table"}
+  #standingsTable td:nth-child(n+3)::before{
+    color:var(--lime);
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  #standingsTable .player-cell{align-items:center}
+  #standingsTable .avatar.sm{width:42px;height:42px}
+  #standingsTable .medal{font-size:25px;min-width:auto}
+}
+
 </style>
 </head>
 <body>
