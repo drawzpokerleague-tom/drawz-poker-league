@@ -1,22 +1,13 @@
-# Drawz Poker League — Professional Admin v2
+# Drawz Poker League — ClubGG Fast Workflow
 
-This version includes:
+This update is designed around ClubGG's lack of a public integration API.
 
-- Firebase administrator sign-in
-- Live public standings
-- Player add/edit/delete tools
-- Tournament scheduling and editing
-- Result entry with automatic player totals
-- Announcement management
-- Installable PWA support
+## Daily workflow
 
-## Deployment
+1. Create and run the tournament inside ClubGG.
+2. Post the event details on the Drawz Poker League schedule.
+3. After the tournament, copy or type the final finishing order.
+4. Paste one ClubGG nickname per line into Quick Results.
+5. Submit once. The app updates points, games played, wins, podiums, and standings.
 
-Upload all website files to the root of the GitHub repository and commit them to `main`.
-Netlify will redeploy automatically.
-
-After confirming the administrator sign-in works, paste the contents of
-`FIRESTORE-RULES.txt` into Firebase > Firestore Database > Rules and publish.
-
-These rules allow public viewing but allow changes only by a signed-in Firebase
-Authentication user. Keep only your administrator account in Firebase Authentication.
+The importer stops before saving if a nickname does not match a registered player.

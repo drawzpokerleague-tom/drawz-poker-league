@@ -45,7 +45,7 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 <main class="wrap">
 <section id="home" class="view active">
 <div class="hero"><span class="badge">FREE CLUBGG LEAGUE</span><h1>Play daily.<br>Climb the rankings.</h1>
-<p class="muted">ClubGG runs the poker tables. Drawz Poker League tracks the schedule, results and standings.</p></div>
+<p class="muted">Create and play tournaments in ClubGG. Then paste the finishing order once here to update the entire league automatically.</p></div>
 <div id="announcementArea"></div>
 <div class="grid">
 <div class="card"><h2>Next tournament</h2><div id="nextTournament" class="stat">TBA</div><p id="nextTournamentDetail" class="muted">No tournament scheduled.</p></div>
@@ -75,8 +75,8 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 <div class="admin-tabs">
 <button class="active" data-admin-panel="dashboardPanel">Dashboard</button>
 <button data-admin-panel="playersPanel">Players</button>
-<button data-admin-panel="tournamentsPanel">Tournaments</button>
-<button data-admin-panel="resultsPanel">Results</button>
+<button data-admin-panel="tournamentsPanel">ClubGG Events</button>
+<button data-admin-panel="resultsPanel">Quick Results</button>
 <button data-admin-panel="announcementsPanel">Announcements</button>
 </div>
 <div>
@@ -91,23 +91,29 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 </div>
 
 <div id="tournamentsPanel" class="admin-panel">
-<div class="card"><h2 style="margin-top:0">Create tournament</h2><form id="addTournamentForm">
-<div class="row"><label><small>Title</small><input name="title" value="Drawz Poker League Daily" required></label>
+<div class="notice"><b>Step 1:</b> Create the real tournament inside ClubGG. <b>Step 2:</b> post its details here so players can see the schedule.</div>
+<div class="card"><h2 style="margin-top:0">Post a ClubGG event</h2><form id="addTournamentForm">
+<div class="row"><label><small>Event title</small><input name="title" value="Drawz Poker League Daily" required></label>
 <label><small>Date and time</small><input name="startsAt" type="datetime-local" required></label></div>
 <div class="row"><label><small>ClubGG Club ID</small><input name="clubId" value="490160"></label>
-<label><small>Game/table code</small><input name="externalId"></label></div>
-<label><small>Join note or password</small><input name="note"></label>
-<button class="btn">Create Tournament</button></form></div>
-<div class="card"><h2 style="margin-top:0">Manage tournaments</h2><div id="tournamentManager"></div></div>
+<label><small>ClubGG tournament/table code</small><input name="externalId"></label></div>
+<label><small>Join instructions, password, or note</small><input name="note"></label>
+<button class="btn">Post Event to League Page</button></form></div>
+<div class="card"><h2 style="margin-top:0">Posted ClubGG events</h2><div id="tournamentManager"></div></div>
 </div>
 
 <div id="resultsPanel" class="admin-panel">
-<div class="card"><h2 style="margin-top:0">Record a result</h2><form id="resultForm">
-<div class="row"><label><small>Tournament</small><select name="tournamentId" id="resultTournament" required></select></label>
-<label><small>Player</small><select name="playerId" id="resultPlayer" required></select></label></div>
-<div class="row"><label><small>Finishing position</small><input name="finish" type="number" min="1" required></label>
-<label><small>Points awarded</small><input name="points" type="number" required></label></div>
-<button class="btn">Save Result</button></form></div>
+<div class="notice"><b>Fast workflow:</b> Copy the finishing order from ClubGG and paste one player per line. The first line is 1st place, the second is 2nd place, and so on.</div>
+<div class="card"><h2 style="margin-top:0">Paste complete finishing order</h2><form id="bulkResultsForm">
+<label><small>ClubGG event</small><select name="tournamentId" id="bulkResultTournament" required></select></label>
+<label><small>Finishing order — one ClubGG nickname per line</small>
+<textarea name="finishingOrder" rows="12" placeholder="PokerMike&#10;RiverQueen&#10;DrawzAce" required></textarea></label>
+<label><small>Optional custom points — comma separated. Leave blank to use the default DPL points.</small>
+<input name="customPoints" placeholder="100, 80, 65, 55, 50"></label>
+<div class="actions"><button class="btn" type="submit">Process Entire Tournament</button>
+<button class="btn alt" type="button" id="previewPointsBtn">Preview Default Points</button></div>
+<div id="bulkResultMessage" class="muted" style="margin-top:10px"></div>
+</form></div>
 <div class="card"><h2 style="margin-top:0">Recent results</h2><div id="resultsManager"></div></div>
 </div>
 
@@ -158,7 +164,7 @@ function renderPublic(){
  document.getElementById('memberCount').textContent=players.length;
  document.getElementById('currentLeader').textContent=rows[0]?.displayName||rows[0]?.username||rows[0]?.name||'—';
  document.getElementById('leaderPoints').textContent=`${rows[0]?.points||0} points`;
- document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username||p.name||'Unknown Player')}</b>${p.username && p.username !== (p.displayName||p.name) ? `<div class="muted">${esc(p.username)}</div>` : ''}</td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
+ document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username||p.name||'Unknown Player')}</b><div class="muted">${esc(p.username||'')}</div></td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
  document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>`<div class="card"><h2 style="margin-top:0">${esc(p.displayName||p.username||p.name||'Unknown Player')}</h2><p class="muted">${esc(p.username||'')}</p><div class="stat">${p.points||0}</div><p>Points · ${p.wins||0} wins · ${p.gamesPlayed||0} played</p></div>`).join(''):'<div class="notice">No players yet.</div>';
  const upcoming=[...tournaments].filter(t=>{const d=t.startsAt?.toDate?t.startsAt.toDate():new Date(t.startsAt);return d>=new Date()}).sort((a,b)=>((a.startsAt?.seconds||0)-(b.startsAt?.seconds||0)));
  const next=upcoming[0];
@@ -188,8 +194,7 @@ function renderAdmin(){
  <label><small>Code</small><input name="externalId" value="${esc(t.externalId||'')}"></label>
  <label><small>Note</small><input name="note" value="${esc(t.note||'')}"></label>
  <div class="actions"><button class="btn small">Save</button><button type="button" class="btn red small delete-tournament">Delete</button></div></form>`).join(''):'<div class="muted">No tournaments.</div>';
- document.getElementById('resultTournament').innerHTML=tournaments.map(t=>`<option value="${t.id}">${esc(t.title)} — ${fmtDate(t.startsAt)}</option>`).join('');
- document.getElementById('resultPlayer').innerHTML=sortedPlayers().map(p=>`<option value="${p.id}">${esc(p.displayName||p.username||p.name||'Unknown Player')}</option>`).join('');
+ document.getElementById('bulkResultTournament').innerHTML=tournaments.map(t=>`<option value="${t.id}">${esc(t.title)} — ${fmtDate(t.startsAt)}</option>`).join('');
  document.getElementById('resultsManager').innerHTML=results.length?results.slice(0,30).map(r=>`<div class="notice">${esc(r.playerName)} — finish #${r.finish}, ${r.points} points <button class="btn red small delete-result" data-id="${r.id}" data-player="${r.playerId}" data-points="${r.points}" data-finish="${r.finish}">Delete</button></div>`).join(''):'<div class="muted">No results.</div>';
  document.getElementById('announcementManager').innerHTML=announcements.length?announcements.map(a=>`<div class="notice"><b>${esc(a.title)}</b><p>${esc(a.body)}</p><button class="btn red small delete-announcement" data-id="${a.id}">Delete</button></div>`).join(''):'<div class="muted">No announcements.</div>';
  bindAdminRows();
@@ -216,7 +221,108 @@ auth.onAuthStateChanged(()=>renderAdmin());
 document.getElementById('addPlayerForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('players').add({username:x.get('username').trim(),displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),points:0,gamesPlayed:0,wins:0,podiums:0,rating:1500,createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('addTournamentForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('tournaments').add({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('announcementForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('announcements').add({title:x.get('title').trim(),body:x.get('body').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
-document.getElementById('resultForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target),player=players.find(p=>p.id===x.get('playerId')),finish=Number(x.get('finish')),points=Number(x.get('points'));if(!player)return;const batch=db.batch();const resultRef=db.collection('results').doc();batch.set(resultRef,{tournamentId:x.get('tournamentId'),playerId:player.id,playerName:player.displayName||player.username||player.name||'Unknown Player',finish,points,createdAt:firebase.firestore.FieldValue.serverTimestamp()});batch.update(db.collection('players').doc(player.id),{points:firebase.firestore.FieldValue.increment(points),gamesPlayed:firebase.firestore.FieldValue.increment(1),wins:firebase.firestore.FieldValue.increment(finish===1?1:0),podiums:firebase.firestore.FieldValue.increment(finish<=3?1:0)});await batch.commit();e.target.reset()};
+
+
+
+const defaultDplPoints = finish => {
+  const fixed = [100,80,65,55,50,45,40,35,30,25,22,20,18,16,14,12,10,8,7,6];
+  return fixed[finish-1] ?? Math.max(5, 25-finish);
+};
+
+function normalizedPlayerName(player){
+  return String(player.username || player.displayName || player.name || '').trim().toLowerCase();
+}
+
+document.getElementById('previewPointsBtn').onclick = () => {
+  const preview = Array.from({length:20}, (_,i)=>`${i+1}${i===0?'st':i===1?'nd':i===2?'rd':'th'}: ${defaultDplPoints(i+1)} points`).join('\n');
+  alert(preview);
+};
+
+document.getElementById('bulkResultsForm').onsubmit = async event => {
+  event.preventDefault();
+  const form = new FormData(event.target);
+  const tournamentId = String(form.get('tournamentId') || '');
+  const names = String(form.get('finishingOrder') || '')
+    .split(/\r?\n/)
+    .map(name => name.trim())
+    .filter(Boolean);
+  const customPoints = String(form.get('customPoints') || '')
+    .split(',')
+    .map(value => value.trim())
+    .filter(Boolean)
+    .map(Number);
+  const message = document.getElementById('bulkResultMessage');
+
+  if (!names.length) {
+    message.textContent = 'Paste at least one player nickname.';
+    return;
+  }
+
+  const matched = [];
+  const unmatched = [];
+
+  names.forEach((enteredName, index) => {
+    const key = enteredName.toLowerCase();
+    const player = players.find(p =>
+      [p.username, p.displayName, p.name]
+        .filter(Boolean)
+        .some(value => String(value).trim().toLowerCase() === key)
+    );
+    if (!player) unmatched.push(enteredName);
+    else matched.push({
+      player,
+      finish: index + 1,
+      points: Number.isFinite(customPoints[index]) ? customPoints[index] : defaultDplPoints(index + 1)
+    });
+  });
+
+  if (unmatched.length) {
+    message.textContent = `Not saved. Add or correct these players first: ${unmatched.join(', ')}`;
+    message.style.color = '#ff8585';
+    return;
+  }
+
+  if (!confirm(`Save all ${matched.length} finishing positions and update the standings?`)) return;
+
+  message.textContent = 'Saving tournament results…';
+  message.style.color = '#bcbcbc';
+
+  try {
+    const batch = db.batch();
+    matched.forEach(({player, finish, points}) => {
+      const resultRef = db.collection('results').doc();
+      batch.set(resultRef, {
+        tournamentId,
+        playerId: player.id,
+        playerName: player.displayName || player.username || player.name || 'Unknown Player',
+        finish,
+        points,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      batch.update(db.collection('players').doc(player.id), {
+        points: firebase.firestore.FieldValue.increment(points),
+        gamesPlayed: firebase.firestore.FieldValue.increment(1),
+        wins: firebase.firestore.FieldValue.increment(finish === 1 ? 1 : 0),
+        podiums: firebase.firestore.FieldValue.increment(finish <= 3 ? 1 : 0)
+      });
+    });
+    if (tournamentId) {
+      batch.update(db.collection('tournaments').doc(tournamentId), {
+        status: 'completed',
+        completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        entrantCount: matched.length
+      });
+    }
+    await batch.commit();
+    event.target.reset();
+    message.textContent = `Success — ${matched.length} results saved and standings updated.`;
+    message.style.color = '#7cff00';
+  } catch (error) {
+    console.error(error);
+    message.textContent = `Could not save results: ${error.message}`;
+    message.style.color = '#ff8585';
+  }
+};
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
 document.getElementById('installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else alert('Open Chrome’s three-dot menu and tap Install app or Add to Home screen.')};
