@@ -110,9 +110,13 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
   #standingsTable .medal{font-size:25px;min-width:auto}
 }
 
+
+#installBtn{display:none}
+body[data-active-view="home"] #installBtn{display:block}
+
 </style>
 </head>
-<body>
+<body data-active-view="home">
 <nav><div class="navin">
 <div class="brand"><img src="dpl-logo.png" alt="">DRAWZ POKER LEAGUE</div>
 <button data-view="home" class="active">Home</button>
@@ -259,6 +263,7 @@ const ordinal=n=>`${n}${n%100>=11&&n%100<=13?'th':n%10===1?'st':n%10===2?'nd':n%
 
 
 document.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
+ document.body.dataset.activeView=btn.dataset.view;
  document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===btn));
  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===btn.dataset.view));
 });

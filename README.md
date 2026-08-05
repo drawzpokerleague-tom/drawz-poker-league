@@ -20,3 +20,7 @@ This package adds:
 
 ## Mobile standings fix
 On screens 700px wide or smaller, standings automatically become stacked cards so every statistic fits without horizontal scrolling.
+
+
+## Install button placement
+The Install App button appears only on the Home page.
