@@ -1,134 +1,133 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<meta name="theme-color" content="#7cff00" />
-<link rel="manifest" href="manifest.webmanifest" />
-<link rel="apple-touch-icon" href="icon-192.png" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7cff00">
+<meta name="description" content="Drawz Poker League standings, schedule, players and administration.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Drawz Poker League</title>
 <style>
-:root{--bg:#000;--panel:#090909;--panel2:#141414;--line:#7cff00;--line-soft:#315f00;--text:#fff;--muted:#b8b8b8;--lime:#7cff00;--lime2:#a6ff4d;--danger:#ff5353;--gold:#ffd76a;--silver:#d8e1e8;--bronze:#d98c53}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 90% 0,rgba(124,255,0,.12),transparent 25%),linear-gradient(180deg,#000,#070707 55%,#000);color:var(--text);font:15px Arial,sans-serif}button,input,select,textarea{font:inherit}.wrap{max-width:1120px;margin:auto;padding:20px}.nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.97);border-bottom:1px solid var(--lime);box-shadow:0 0 18px rgba(124,255,0,.15)}.navin{max-width:1120px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}.brand{font-size:20px;font-weight:900;color:var(--lime);margin-right:auto;text-shadow:0 0 13px rgba(124,255,0,.5)}.nav button{background:none;color:var(--muted);border:0;border-bottom:2px solid transparent;padding:8px 3px;cursor:pointer}.nav button.active,.nav button:hover{color:var(--lime);border-bottom-color:var(--lime)}.hero{padding:28px 0 22px}.hero h1{font-size:clamp(38px,8vw,72px);line-height:.95;margin:10px 0 14px;text-shadow:0 0 25px rgba(124,255,0,.15)}.badge{display:inline-block;background:#101010;color:var(--lime);border:1px solid var(--lime);border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line-soft);padding:18px;border-radius:17px;box-shadow:0 8px 30px rgba(0,0,0,.48),inset 0 0 0 1px rgba(124,255,0,.03)}.card:hover{border-color:var(--lime);box-shadow:0 0 18px rgba(124,255,0,.1),0 8px 30px rgba(0,0,0,.55)}.stat{font-size:34px;color:var(--lime);font-weight:900;text-shadow:0 0 12px rgba(124,255,0,.28)}.countdown{font-size:clamp(24px,6vw,42px);letter-spacing:2px}.btn{border:1px solid var(--lime);border-radius:10px;padding:10px 14px;background:var(--lime);color:#000;font-weight:900;cursor:pointer;box-shadow:0 0 12px rgba(124,255,0,.14)}.btn:hover{background:var(--lime2)}.btn.alt{background:#050505;color:var(--lime)}.btn.red{background:#190000;color:#fff;border-color:var(--danger)}.btn.small{padding:7px 10px;font-size:12px}table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}th,td{padding:12px;text-align:left;border-bottom:1px solid #242424}th{color:var(--lime);font-size:12px;text-transform:uppercase;background:#050505}tbody tr:nth-child(even){background:#0d0d0d}tbody tr:hover{background:#151515}tr:last-child td{border:0}.rank{color:var(--lime);font-weight:900;font-size:18px}.view{display:none}.view.active{display:block}h1,h2,h3{color:#fff}h2{margin-top:30px}label{display:block;margin:10px 0;font-weight:700}label small{display:block;color:var(--muted);font-weight:400;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid var(--line-soft);border-radius:9px;background:#050505;color:#fff;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(124,255,0,.12)}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.empty{padding:25px;text-align:center;color:var(--muted)}.notice{padding:12px;border-left:4px solid var(--lime);background:#0d0d0d;border-radius:8px;color:#e8e8e8}.footer{text-align:center;color:var(--muted);padding:35px;border-top:1px solid #171717}.modal{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}.modalbox{max-width:620px;max-height:90vh;overflow:auto;width:100%;background:#090909;border:1px solid var(--lime);border-radius:16px;padding:20px;box-shadow:0 0 36px rgba(124,255,0,.15)}.podium1{color:var(--gold)}.podium2{color:var(--silver)}.podium3{color:var(--bronze)}.achievement{display:inline-block;border:1px solid var(--line-soft);border-radius:999px;padding:5px 9px;margin:3px;color:var(--lime);background:#070707}.announcement{border-left:3px solid var(--lime);padding-left:12px;margin:12px 0}.bar{height:8px;background:#222;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--lime)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.tabs button{padding:8px 12px;border-radius:999px;border:1px solid var(--line-soft);background:#050505;color:var(--muted)}.tabs button.active{color:#000;background:var(--lime);border-color:var(--lime)}
-.install-banner{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#090909;border:1px solid var(--lime);border-radius:14px;padding:12px;box-shadow:0 0 28px rgba(124,255,0,.2)}.install-banner.show{display:flex;gap:10px;align-items:center}.install-banner .btn{margin-left:auto;white-space:nowrap}
-@media(max-width:700px){.wrap{padding:14px}.navin{padding:11px 14px;overflow-x:auto;flex-wrap:nowrap}.brand{min-width:max-content}.nav button{min-width:max-content}th,td{padding:8px;font-size:12px}.hide-sm{display:none}.hero{padding-top:22px}}
-
-.admin-locked > :not(h1):not(#authPanel){display:none!important}
-#authPanel{margin:14px 0 22px}
-.auth-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.auth-status{font-weight:800;color:var(--lime)}
-.player-admin-row{display:grid;grid-template-columns:1.5fr repeat(3,minmax(80px,.65fr)) auto;gap:8px;align-items:end;padding:12px 0;border-bottom:1px solid #252525}
-.player-admin-row:last-child{border-bottom:0}
-.player-admin-row label{margin:0}
-.player-admin-row .actions{align-self:end}
-@media(max-width:760px){.player-admin-row{grid-template-columns:1fr 1fr}.player-admin-row .player-name{grid-column:1/-1}.player-admin-row .actions{grid-column:1/-1}}
-
-</style></head>
+:root{--bg:#000;--panel:#101010;--panel2:#171717;--lime:#7cff00;--muted:#bcbcbc;--line:#315f00;--red:#ff5858;--gold:#ffd65a}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 85% 0,rgba(124,255,0,.13),transparent 24%),#000;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit} .wrap{max-width:1100px;margin:auto;padding:20px}
+nav{position:sticky;top:0;z-index:20;background:#030303f4;border-bottom:1px solid var(--lime)} .navin{max-width:1100px;margin:auto;display:flex;align-items:center;gap:16px;padding:12px 18px;overflow-x:auto}
+.brand{color:var(--lime);font-weight:900;white-space:nowrap;margin-right:auto;display:flex;align-items:center;gap:8px} .brand img{width:36px;height:36px;border-radius:50%}
+nav button{border:0;border-bottom:2px solid transparent;background:none;color:#bbb;padding:10px 2px;white-space:nowrap} nav button.active{color:var(--lime);border-color:var(--lime)}
+.view{display:none} .view.active{display:block} h1{font-size:clamp(34px,7vw,62px);line-height:1;margin:26px 0} h2{margin-top:30px}
+.hero{padding:28px 0} .hero h1{font-size:clamp(42px,9vw,78px)} .muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px} .card{background:linear-gradient(180deg,var(--panel2),#090909);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 28px #0009}
+.stat{color:var(--lime);font-size:36px;font-weight:900} .badge{display:inline-block;border:1px solid var(--lime);border-radius:999px;color:var(--lime);padding:6px 10px;font-weight:800}
+.btn{border:1px solid var(--lime);background:var(--lime);color:#000;padding:10px 14px;border-radius:10px;font-weight:900;cursor:pointer} .btn.alt{background:#050505;color:var(--lime)} .btn.red{background:#210000;color:#fff;border-color:var(--red)} .btn.small{padding:7px 10px;font-size:12px}
+label{display:block;margin:10px 0} label small{display:block;color:var(--muted);margin-bottom:5px} input,select,textarea{width:100%;background:#050505;color:#fff;border:1px solid var(--line);border-radius:9px;padding:10px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px} .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:collapse;background:#090909;border:1px solid var(--line);border-radius:14px;overflow:hidden} th,td{padding:11px;text-align:left;border-bottom:1px solid #252525} th{color:var(--lime);font-size:12px;text-transform:uppercase} tr:last-child td{border:0}
+.notice{padding:12px;border-left:4px solid var(--lime);background:#111;border-radius:8px;margin:12px 0} .error{border-left-color:var(--red);color:#ffb0b0}
+.admin-shell{display:grid;grid-template-columns:190px 1fr;gap:15px} .admin-tabs{display:flex;flex-direction:column;gap:8px} .admin-tabs button{text-align:left;background:#080808;border:1px solid var(--line);color:#bbb;padding:11px;border-radius:9px} .admin-tabs button.active{background:var(--lime);color:#000;font-weight:900}
+.admin-panel{display:none} .admin-panel.active{display:block} .locked-content{display:none} body.admin-ready .locked-content{display:block}
+.list-row{display:grid;grid-template-columns:1.4fr repeat(4,minmax(70px,.65fr)) auto;gap:8px;align-items:end;padding:12px 0;border-bottom:1px solid #252525} .list-row label{margin:0}
+.install{position:fixed;right:12px;bottom:12px;z-index:30}
+@media(max-width:760px){.wrap{padding:14px} .admin-shell{grid-template-columns:1fr} .admin-tabs{flex-direction:row;overflow-x:auto} .admin-tabs button{white-space:nowrap} .list-row{grid-template-columns:1fr 1fr} .list-row .wide,.list-row .actions{grid-column:1/-1} th,td{font-size:12px;padding:8px}}
+</style>
+</head>
 <body>
-<nav class="nav"><div class="navin"><div class="brand"><img src="dpl-logo.png" alt="DPL logo" style="width:34px;height:34px;border-radius:50%;vertical-align:middle;margin-right:8px">DRAWZ POKER LEAGUE</div><button data-view="home" class="active">Home</button><button data-view="leaderboard">Standings</button><button data-view="rating">Skill Rating</button><button data-view="schedule">Schedule</button><button data-view="players">Players</button><button data-view="hall">Hall of Fame</button><button data-view="admin">Admin</button><button id="navInstallBtn" class="btn small" type="button">Install App</button></div></nav>
+<nav><div class="navin">
+<div class="brand"><img src="dpl-logo.png" alt="">DRAWZ POKER LEAGUE</div>
+<button data-view="home" class="active">Home</button>
+<button data-view="standings">Standings</button>
+<button data-view="schedule">Schedule</button>
+<button data-view="players">Players</button>
+<button data-view="admin">Admin</button>
+</div></nav>
+
 <main class="wrap">
-<section id="home" class="view active"><div class="hero"><span class="badge">FREE CLUBGG LEAGUE</span><h1>Play daily.<br>Climb the rankings.</h1><p class="muted">ClubGG handles the poker tables. Drawz Poker League handles registration, schedules, standings, ratings, achievements, and league history.</p><div class="card" style="margin-top:18px;display:flex;align-items:center;gap:14px"><img src="dpl-logo.png" alt="Drawz Poker League logo" style="width:76px;height:76px;border-radius:50%;border:2px solid #7CFC00"><div><b style="font-size:1.1rem">Drawz Poker League on ClubGG</b><div class="muted">Club ID: <strong style="color:#7CFC00">490160</strong></div><div class="muted">Free daily No-Limit Hold’em league tournaments</div></div></div></div><div id="announcementBox"></div><div id="todayBox"></div><div id="homeCards" class="grid"></div><h2>Top 5 this month</h2><div id="homeTable"></div></section>
-<section id="leaderboard" class="view"><h1>Monthly Standings</h1><p class="muted">Best 20 scores count. Ties break by wins, then podium finishes.</p><div id="leaderTable"></div></section>
-<section id="rating" class="view"><h1>All-Time Skill Rating</h1><p class="muted">Every player begins at 1500. Ratings rise or fall based on tournament performance against the field.</p><div id="ratingTable"></div></section>
+<section id="home" class="view active">
+<div class="hero"><span class="badge">FREE CLUBGG LEAGUE</span><h1>Play daily.<br>Climb the rankings.</h1>
+<p class="muted">ClubGG runs the poker tables. Drawz Poker League tracks the schedule, results and standings.</p></div>
+<div id="announcementArea"></div>
+<div class="grid">
+<div class="card"><h2>Next tournament</h2><div id="nextTournament" class="stat">TBA</div><p id="nextTournamentDetail" class="muted">No tournament scheduled.</p></div>
+<div class="card"><h2>Current leader</h2><div id="currentLeader" class="stat">—</div><p id="leaderPoints" class="muted">0 points</p></div>
+<div class="card"><h2>League members</h2><div id="memberCount" class="stat">0</div><p class="muted">Live Firebase database</p></div>
+</div>
+</section>
+
+<section id="standings" class="view"><h1>Monthly Standings</h1><div id="standingsTable"></div></section>
 <section id="schedule" class="view"><h1>Tournament Schedule</h1><div id="scheduleGrid" class="grid"></div></section>
-<section id="players" class="view"><h1>Players</h1><div id="playerGrid" class="grid"></div></section>
-<section id="hall" class="view"><h1>Hall of Fame</h1><div id="hallGrid" class="grid"></div><h2>Monthly Champions</h2><div id="championHistory"></div></section>
-<section id="admin" class="view admin-locked"><h1>Admin Control Center</h1><div id="authPanel" class="card"><h2 style="margin-top:0">Administrator Sign-In</h2><div id="signedOutBox"><p class="muted">Sign in with the administrator email and password you created in Firebase.</p><form id="adminLoginForm" class="auth-grid"><label><small>Email</small><input type="email" name="email" autocomplete="username" required></label><label><small>Password</small><input type="password" name="password" autocomplete="current-password" required></label><div class="actions"><button class="btn" type="submit">Sign In</button></div></form></div><div id="signedInBox" hidden><p class="auth-status">Signed in as <span id="adminEmail"></span></p><button id="adminSignOutBtn" class="btn alt" type="button">Sign Out</button></div><div id="authMessage" class="muted" style="margin-top:10px"></div></div><div class="notice">Prototype data is saved only in this browser. Export a backup regularly.</div><h2>League Dashboard</h2><div id="adminStats" class="grid"></div><div class="grid"><form id="playerForm" class="card"><h2>Add Player</h2><label><small>ClubGG nickname</small><input name="username" required></label><label><small>Display name</small><input name="displayName" required></label><button class="btn">Add player</button></form><form id="tournamentForm" class="card"><h2>Create Tournament</h2><label><small>Title</small><input name="title" value="Drawz Poker League Daily" required></label><label><small>Date and time</small><input type="datetime-local" name="startsAt" required></label><div class="row"><label><small>ClubGG Club ID</small><input name="clubId" value="490160"></label><label><small>Game code / table ID</small><input name="externalId"></label></div><label><small>Password or join note</small><input name="password"></label><button class="btn">Create tournament</button></form></div>
-<div class="grid"><form id="announcementForm" class="card"><h2>Post Announcement</h2><label><small>Headline</small><input name="title" required></label><label><small>Message</small><textarea name="body" rows="4" required></textarea></label><button class="btn">Publish</button></form><form id="settingsForm" class="card"><h2>League Settings</h2><label><small>League name</small><input name="leagueName"></label><label><small>Default Club ID</small><input name="clubId" value="490160"></label><label><small>Best results counted per month</small><input type="number" min="1" max="31" name="bestCount"></label><button class="btn">Save settings</button></form></div>
-<h2>Enter Results Manually</h2><form id="resultsForm" class="card"><label><small>Tournament</small><select name="tournamentId" required></select></label><label><small>One exact ClubGG nickname per line, winner first</small><textarea name="results" rows="10" required></textarea></label><button class="btn">Calculate points, rating and publish</button></form>
-<h2>Import ClubGG Results</h2><div class="card"><p class="muted">Choose a ClubGG CSV export or administrator-prepared CSV. The prototype looks for columns such as nickname/player/name and finish/rank/position. Review the detected finishing order before publishing.</p><input id="csvFile" type="file" accept=".csv,text/csv"><div id="csvPreview" style="margin-top:12px"></div></div>
-<h2>Data Tools</h2><div class="card actions"><button id="exportBtn" class="btn alt" type="button">Export Backup</button><label class="btn alt" style="margin:0;cursor:pointer">Import Backup<input id="importFile" type="file" accept="application/json" hidden></label><button id="demoBtn" class="btn alt" type="button">Load Demo Data</button><button id="archiveBtn" class="btn alt" type="button">Archive Month</button><button id="resetBtn" class="btn red" type="button">Erase All Data</button></div></section>
-</main><div class="footer">Free play only • No entry fees • No wagering</div>
-<div id="installBanner" class="install-banner show"><div><b>Install Drawz Poker League</b><div class="muted">Install it on your phone for full-screen access.</div></div><button id="installBtn" class="btn">Install</button><button id="dismissInstall" class="btn alt">Later</button></div>
-<div id="installHelp" class="modal"><div class="modalbox"><h2>Install Drawz Poker League</h2><div id="installHelpText"></div><div class="actions" style="margin-top:18px"><button id="closeInstallHelp" class="btn">Got it</button></div></div></div>
-<div id="playerModal" class="modal"><div class="modalbox"><div class="actions" style="justify-content:space-between"><h2 id="modalTitle" style="margin:0"></h2><button id="closeModal" class="btn alt">Close</button></div><div id="modalBody"></div></div></div>
-<script>
-const KEY='drawzPokerLeagueClubGGV3';
-const empty=()=>({players:[],tournaments:[],results:[],registrations:[],announcements:[],archives:[],settings:{leagueName:'Drawz Poker League',clubId:'490160',bestCount:20}});
-let db=load();
-function normalize(){db={...empty(),...db};db.settings={...empty().settings,...(db.settings||{})};db.players=(db.players||[]).map(p=>({rating:1500,...p}));db.registrations=db.registrations||[];db.announcements=db.announcements||[];db.archives=db.archives||[]}
-function load(){try{const x=JSON.parse(localStorage.getItem(KEY));return x||empty()}catch{return empty()}}
-function save(){normalize();localStorage.setItem(KEY,JSON.stringify(db));render()}
-function id(){return Date.now()+Math.floor(Math.random()*10000)}
-function monthBounds(d=new Date()){return [new Date(d.getFullYear(),d.getMonth(),1),new Date(d.getFullYear(),d.getMonth()+1,1)]}
-function points(finish,field){if(finish<1||field<1||finish>field)return 0;const pct=(field-finish+1)/field;return Math.round(10+90*Math.pow(pct,2.2))+(finish===1?Math.min(30,Math.round(field*.75)):0)+(finish===2?12:finish===3?7:0)}
-function monthResults(pid,d=new Date()){const [a,b]=monthBounds(d);return db.results.filter(r=>r.playerId===pid).filter(r=>{const t=db.tournaments.find(x=>x.id===r.tournamentId),dt=t?new Date(t.startsAt):new Date(0);return dt>=a&&dt<b})}
-function standings(){const bestCount=Number(db.settings.bestCount)||20;return db.players.map(p=>{const rs=monthResults(p.id),best=[...rs].sort((a,b)=>b.points-a.points).slice(0,bestCount);return{...p,points:best.reduce((s,r)=>s+r.points,0),played:rs.length,wins:rs.filter(r=>r.finish===1).length,podiums:rs.filter(r=>r.finish<=3).length,avg:rs.length?rs.reduce((s,r)=>s+r.finish,0)/rs.length:null}}).sort((a,b)=>b.points-a.points||b.wins-a.wins||b.podiums-a.podiums)}
-function ratings(){return [...db.players].sort((a,b)=>(b.rating||1500)-(a.rating||1500))}
-function fmtDate(s){return new Date(s).toLocaleDateString()}function fmtTime(s){return new Date(s).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}
-function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function medal(i){return i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1)}
-function achievements(p){const rs=db.results.filter(r=>r.playerId===p.id),wins=rs.filter(r=>r.finish===1).length,podiums=rs.filter(r=>r.finish<=3).length,a=[];if(rs.length>=1)a.push('First Game');if(wins>=1)a.push('First Win');if(wins>=5)a.push('Five-Time Winner');if(rs.length>=25)a.push('Iron Player');if(podiums>=10)a.push('Podium Regular');if((p.rating||1500)>=1600)a.push('Elite 1600');return a}
-function table(rows){if(!rows.length)return '<div class="empty card">No players or results yet.</div>';return `<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th><th class="hide-sm">Top 3</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td class="rank ${i<3?'podium'+(i+1):''}">${medal(i)}</td><td><button onclick="showPlayer(${p.id})" style="border:0;background:none;color:white;padding:0;cursor:pointer;text-align:left"><b>${esc(p.username)}</b><br><span class="muted">${esc(p.displayName)}</span></button></td><td><b>${p.points}</b></td><td>${p.played}</td><td>${p.wins}</td><td class="hide-sm">${p.podiums}</td></tr>`).join('')}</tbody></table>`}
-function nextTournament(){const now=new Date();return [...db.tournaments].filter(t=>new Date(t.startsAt)>=now).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt))[0]}
-function countdownText(t){if(!t)return 'TBA';let d=new Date(t.startsAt)-new Date();if(d<=0)return 'Starting now';const days=Math.floor(d/86400000);d%=86400000;const h=Math.floor(d/3600000);d%=3600000;const m=Math.floor(d/60000);const s=Math.floor((d%60000)/1000);return `${days?days+'d ':''}${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
-function render(){normalize();document.querySelector('.brand').textContent='♠ '+db.settings.leagueName.toUpperCase();const rows=standings(),rate=ratings(),next=nextTournament(),now=new Date();const done=[...db.tournaments].filter(t=>t.status==='COMPLETED').sort((a,b)=>new Date(b.startsAt)-new Date(a.startsAt))[0];const wr=done&&db.results.find(r=>r.tournamentId===done.id&&r.finish===1),wp=wr&&db.players.find(p=>p.id===wr.playerId);const anns=[...db.announcements].sort((a,b)=>b.createdAt-a.createdAt).slice(0,3);document.querySelector('#announcementBox').innerHTML=anns.length?`<div class="card"><span class="badge">LEAGUE NEWS</span>${anns.map(a=>`<div class="announcement"><b>${esc(a.title)}</b><div class="muted">${esc(a.body)}</div></div>`).join('')}</div>`:'';
-const regs=next?db.registrations.filter(r=>r.tournamentId===next.id).length:0;document.querySelector('#todayBox').innerHTML=next?`<div class="card" style="margin-bottom:15px"><span class="badge">TODAY'S TOURNAMENT</span><h2 style="margin:12px 0 4px">${esc(next.title)}</h2><div id="countdown" class="stat countdown">${countdownText(next)}</div><p><b>${fmtDate(next.startsAt)} at ${fmtTime(next.startsAt)}</b> • ${regs} registered</p><p class="muted">Club ID: ${esc(next.clubId||db.settings.clubId||'Add in Admin')} ${next.externalId?'• Game code: '+esc(next.externalId):''}</p><div class="actions"><button class="btn" onclick="registerPrompt(${next.id})">Register for Today</button><button class="btn alt" onclick="openPoker()">Open ClubGG</button></div></div>`:'';
-document.querySelector('#homeCards').innerHTML=`<div class="card"><h3>Next tournament</h3><div class="stat">${next?fmtDate(next.startsAt):'TBA'}</div><p>${next?fmtTime(next.startsAt):'No tournament scheduled'}</p></div><div class="card"><h3>Current leader</h3><div class="stat">${rows[0]?esc(rows[0].username):'No results'}</div><p>${rows[0]?.points||0} points</p></div><div class="card"><h3>Top skill rating</h3><div class="stat">${rate[0]?esc(rate[0].username):'No players'}</div><p>${Math.round(rate[0]?.rating||1500)} rating</p></div><div class="card"><h3>Latest winner</h3><div class="stat">${wp?esc(wp.username):'No winner'}</div><p>${done?esc(done.title):'Enter results in Admin'}</p></div>`;
-document.querySelector('#homeTable').innerHTML=table(rows.slice(0,5));document.querySelector('#leaderTable').innerHTML=table(rows);
-document.querySelector('#ratingTable').innerHTML=rate.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Rating</th><th>Games</th><th>Achievements</th></tr></thead><tbody>${rate.map((p,i)=>`<tr><td class="rank">${medal(i)}</td><td><button onclick="showPlayer(${p.id})" style="border:0;background:none;color:white;padding:0;cursor:pointer"><b>${esc(p.username)}</b></button></td><td><b>${Math.round(p.rating||1500)}</b></td><td>${db.results.filter(r=>r.playerId===p.id).length}</td><td>${achievements(p).length}</td></tr>`).join('')}</tbody></table>`:'<div class="empty card">No players yet.</div>';
-document.querySelector('#scheduleGrid').innerHTML=db.tournaments.length?[...db.tournaments].sort((a,b)=>new Date(b.startsAt)-new Date(a.startsAt)).map(t=>{const n=db.registrations.filter(r=>r.tournamentId===t.id).length;return `<article class="card"><span class="badge">${t.status}</span><h3>${esc(t.title)}</h3><p><b>${fmtDate(t.startsAt)}</b> at ${fmtTime(t.startsAt)}</p><p class="muted">ClubGG • ${n} registered</p>${t.clubId||db.settings.clubId?`<p>Club ID: <b>${esc(t.clubId||db.settings.clubId)}</b></p>`:''}${t.externalId?`<p>Game code: <b>${esc(t.externalId)}</b></p>`:''}${t.password?`<p>Join note: <b>${esc(t.password)}</b></p>`:''}<p>${db.results.filter(r=>r.tournamentId===t.id).length||'Results pending'}</p></article>`}).join(''):'<div class="empty card">No tournaments scheduled.</div>';
-document.querySelector('#playerGrid').innerHTML=db.players.length?db.players.map(p=>{const r=rows.find(x=>x.id===p.id)||{points:0,played:0,wins:0};return `<button class="card" onclick="showPlayer(${p.id})" style="color:white;text-align:left;cursor:pointer"><h3>${esc(p.username)}</h3><p class="muted">${esc(p.displayName)}</p><div class="stat">${r.points}</div><p>${r.played} played • ${r.wins} wins • Rating ${Math.round(p.rating||1500)}</p></button>`}).join(''):'<div class="empty card">No players added.</div>';
-const allWins=db.players.map(p=>({p,w:db.results.filter(r=>r.playerId===p.id&&r.finish===1).length})).sort((a,b)=>b.w-a.w),allPod=db.players.map(p=>({p,w:db.results.filter(r=>r.playerId===p.id&&r.finish<=3).length})).sort((a,b)=>b.w-a.w);document.querySelector('#hallGrid').innerHTML=`<div class="card"><h3>Most All-Time Wins</h3><div class="stat">${allWins[0]?esc(allWins[0].p.username):'—'}</div><p>${allWins[0]?.w||0} wins</p></div><div class="card"><h3>Most Podiums</h3><div class="stat">${allPod[0]?esc(allPod[0].p.username):'—'}</div><p>${allPod[0]?.w||0} top-three finishes</p></div><div class="card"><h3>Highest Rating</h3><div class="stat">${rate[0]?esc(rate[0].username):'—'}</div><p>${Math.round(rate[0]?.rating||1500)}</p></div><div class="card"><h3>Seasons Archived</h3><div class="stat">${db.archives.length}</div><p>Completed monthly seasons</p></div>`;document.querySelector('#championHistory').innerHTML=db.archives.length?`<table><thead><tr><th>Month</th><th>Champion</th><th>Points</th></tr></thead><tbody>${db.archives.map(a=>`<tr><td>${esc(a.month)}</td><td>${esc(a.champion)}</td><td>${a.points}</td></tr>`).join('')}</tbody></table>`:'<div class="empty card">Archive a completed month to begin the Hall of Fame.</div>';
-const thisMonthDone=db.tournaments.filter(t=>t.status==='COMPLETED'&&monthResults(db.players[0]?.id||-1,new Date(t.startsAt))!==null).length;const avg=db.tournaments.filter(t=>t.status==='COMPLETED').length?Math.round(db.results.length/db.tournaments.filter(t=>t.status==='COMPLETED').length):0;document.querySelector('#adminStats').innerHTML=`<div class="card"><h3>Total Members</h3><div class="stat">${db.players.length}</div></div><div class="card"><h3>Today's Registrations</h3><div class="stat">${regs}</div></div><div class="card"><h3>Completed Games</h3><div class="stat">${db.tournaments.filter(t=>t.status==='COMPLETED').length}</div></div><div class="card"><h3>Average Attendance</h3><div class="stat">${avg}</div></div>`;
-document.querySelector('#resultsForm select').innerHTML=db.tournaments.map(t=>`<option value="${t.id}">${fmtDate(t.startsAt)} — ${esc(t.title)}</option>`).join('');document.querySelector('#resultsForm textarea').placeholder=db.players.slice(0,5).map(p=>p.username).join('\n');const sf=document.querySelector('#settingsForm');if(sf){sf.leagueName.value=db.settings.leagueName;sf.clubId.value=db.settings.clubId;sf.bestCount.value=db.settings.bestCount}}
-function applyRatings(players){const n=players.length;if(n<2)return;const before=players.map(p=>p.rating||1500);players.forEach((p,i)=>{let expected=0,actual=0;for(let j=0;j<n;j++)if(i!==j){expected+=1/(1+Math.pow(10,(before[j]-before[i])/400));actual+=i<j?1:0}const change=24*(actual-expected)/Math.max(1,n-1);p.rating=Math.max(800,Math.round(before[i]+change))})}
-function publishResults(tid,names){if(new Set(names.map(x=>x.toLowerCase())).size!==names.length)throw Error('A username appears more than once.');const ps=names.map(n=>db.players.find(p=>p.username.toLowerCase()===n.toLowerCase()));if(ps.some(x=>!x))throw Error('One or more usernames were not found. Add each player first and use the exact username.');db.results=db.results.filter(r=>r.tournamentId!==tid);ps.forEach((p,i)=>db.results.push({id:id(),tournamentId:tid,playerId:p.id,finish:i+1,fieldSize:ps.length,points:points(i+1,ps.length)}));applyRatings(ps);const t=db.tournaments.find(t=>t.id===tid);if(t)t.status='COMPLETED';save()}
-function registerPrompt(tid){const name=prompt('Enter your exact ClubGG nickname:');if(!name)return;const p=db.players.find(x=>x.username.toLowerCase()===name.trim().toLowerCase());if(!p)return alert('That player has not been added to the league yet.');if(db.registrations.some(r=>r.tournamentId===tid&&r.playerId===p.id))return alert('You are already registered.');db.registrations.push({id:id(),tournamentId:tid,playerId:p.id,createdAt:Date.now()});save();alert('Registration confirmed.')}
-window.registerPrompt=registerPrompt;function openPoker(){window.open('https://www.clubgg.com/','_blank');alert('ClubGG Club ID: 490160');};window.openPoker=openPoker;
-document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(b.dataset.view).classList.add('active')});
-document.querySelector('#playerForm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),username=String(f.get('username')).trim();if(db.players.some(p=>p.username.toLowerCase()===username.toLowerCase()))return alert('That username already exists.');db.players.push({id:id(),username,displayName:String(f.get('displayName')).trim(),rating:1500});e.target.reset();save()};
-document.querySelector('#tournamentForm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);db.tournaments.push({id:id(),title:String(f.get('title')),platform:'ClubGG',startsAt:String(f.get('startsAt')),clubId:String(f.get('clubId')),externalId:String(f.get('externalId')),password:String(f.get('password')),status:'SCHEDULED'});e.target.reset();save()};
-document.querySelector('#announcementForm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);db.announcements.push({id:id(),title:String(f.get('title')),body:String(f.get('body')),createdAt:Date.now()});e.target.reset();save()};
-document.querySelector('#settingsForm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);db.settings={leagueName:String(f.get('leagueName'))||'Drawz Poker League',clubId:String(f.get('clubId')),bestCount:Number(f.get('bestCount'))||20};save();alert('Settings saved.')};
-document.querySelector('#resultsForm').onsubmit=e=>{e.preventDefault();try{const f=new FormData(e.target),tid=Number(f.get('tournamentId')),names=String(f.get('results')).split(/\r?\n/).map(x=>x.trim()).filter(Boolean);publishResults(tid,names);e.target.reset();alert('Results, points and ratings updated.')}catch(err){alert(err.message)}};
-function showPlayer(pid){const p=db.players.find(x=>x.id===pid);if(!p)return;const rs=db.results.filter(r=>r.playerId===pid).sort((a,b)=>{const ta=db.tournaments.find(t=>t.id===a.tournamentId),tb=db.tournaments.find(t=>t.id===b.tournamentId);return new Date(tb?.startsAt)-new Date(ta?.startsAt)}),ach=achievements(p);document.querySelector('#modalTitle').textContent=p.username;document.querySelector('#modalBody').innerHTML=`<p class="muted">${esc(p.displayName)}</p><div class="grid"><div class="card"><div class="stat">${Math.round(p.rating||1500)}</div><p>Skill rating</p></div><div class="card"><div class="stat">${rs.filter(r=>r.finish===1).length}</div><p>Career wins</p></div></div><h3>Achievements</h3><div>${ach.length?ach.map(a=>`<span class="achievement">★ ${esc(a)}</span>`).join(''):'<span class="muted">No achievements yet.</span>'}</div><h3>Recent Results</h3>${rs.length?`<table><thead><tr><th>Date</th><th>Finish</th><th>Points</th></tr></thead><tbody>${rs.map(r=>{const t=db.tournaments.find(x=>x.id===r.tournamentId);return `<tr><td>${t?fmtDate(t.startsAt):'—'}</td><td>#${r.finish} of ${r.fieldSize}</td><td>${r.points}</td></tr>`}).join('')}</tbody></table>`:'<div class="empty">No results yet.</div>'}`;document.querySelector('#playerModal').classList.add('open')}
-window.showPlayer=showPlayer;document.querySelector('#closeModal').onclick=()=>document.querySelector('#playerModal').classList.remove('open');document.querySelector('#playerModal').onclick=e=>{if(e.target.id==='playerModal')e.currentTarget.classList.remove('open')};
-document.querySelector('#csvFile').onchange=e=>{const file=e.target.files[0];if(!file)return;const rd=new FileReader();rd.onload=()=>{const text=String(rd.result),lines=text.split(/\r?\n/).filter(Boolean);if(lines.length<2)return alert('The CSV appears empty.');const headers=lines[0].split(',').map(x=>x.trim().replace(/^"|"$/g,'').toLowerCase());const nameIdx=headers.findIndex(h=>/username|player|name/.test(h)),rankIdx=headers.findIndex(h=>/finish|rank|position|place/.test(h));if(nameIdx<0)return document.querySelector('#csvPreview').innerHTML='<div class="notice">Could not detect a username/player/name column. Upload a sample CSV here in chat and the importer can be matched exactly.</div>';const rows=lines.slice(1).map(line=>{const c=line.match(/("[^"]*"|[^,]+)/g)||[];return {name:(c[nameIdx]||'').replace(/^"|"$/g,'').trim(),rank:rankIdx>=0?Number((c[rankIdx]||'').replace(/^"|"$/g,'')):9999}}).filter(x=>x.name).sort((a,b)=>a.rank-b.rank);const names=rows.map(x=>x.name);document.querySelector('#csvPreview').innerHTML=`<div class="notice">Detected ${names.length} players.</div><label><small>Choose tournament</small><select id="csvTournament">${db.tournaments.map(t=>`<option value="${t.id}">${fmtDate(t.startsAt)} — ${esc(t.title)}</option>`).join('')}</select></label><textarea id="csvNames" rows="10">${esc(names.join('\n'))}</textarea><button class="btn" id="publishCsv">Publish imported results</button>`;document.querySelector('#publishCsv').onclick=()=>{try{publishResults(Number(document.querySelector('#csvTournament').value),document.querySelector('#csvNames').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean));alert('CSV results published.')}catch(err){alert(err.message)}}};rd.readAsText(file)};
-document.querySelector('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='drawz-pl-clubgg-backup.json';a.click();URL.revokeObjectURL(a.href)};document.querySelector('#importFile').onchange=e=>{const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('Backup imported.')}catch{alert('Invalid backup file.')}};r.readAsText(file)};
-document.querySelector('#archiveBtn').onclick=()=>{const rows=standings();if(!rows[0]||!rows[0].points)return alert('There are no standings to archive.');const month=new Date().toLocaleDateString([],{month:'long',year:'numeric'});if(db.archives.some(a=>a.month===month))return alert('This month is already archived.');db.archives.unshift({id:id(),month,champion:rows[0].username,points:rows[0].points,standings:rows.map(x=>({username:x.username,points:x.points}))});save();alert('Month archived to Hall of Fame.')};
-document.querySelector('#resetBtn').onclick=()=>{if(confirm('Erase every player, tournament, result, registration and announcement?')){db=empty();save()}};
-document.querySelector('#demoBtn').onclick=()=>{if(db.players.length&&!confirm('Replace current data with demo data?'))return;db=empty();db.settings.clubId='490160';const names=[['Thomas Drawz','Thomas Drawz'],['RiverKing','Mike R.'],['PocketAces','Jamie'],['AllInAnnie','Annie'],['ChipLeader','Chris'],['LimeShark','Dana']];db.players=names.map(n=>({id:id(),username:n[0],displayName:n[1],rating:1500}));for(let i=-5;i<5;i++){const d=new Date();d.setDate(d.getDate()+i);d.setHours(20,0,0,0);const t={id:id(),title:`Daily League Tournament #${i+6}`,platform:'ClubGG',startsAt:d.toISOString().slice(0,16),clubId:'490160',externalId:'',password:'',status:i<0?'COMPLETED':'SCHEDULED'};db.tournaments.push(t);if(i<0){const order=[...db.players].sort(()=>Math.random()-.5);order.forEach((p,j)=>db.results.push({id:id(),tournamentId:t.id,playerId:p.id,finish:j+1,fieldSize:order.length,points:points(j+1,order.length)}));applyRatings(order)}}db.announcements=[{id:id(),title:'Welcome to Drawz Poker League',body:'Daily free-play tournaments run through ClubGG. Check the schedule and register before game time. Club ID: 490160.',createdAt:Date.now()}];save()};
-normalize();render();setInterval(()=>{const el=document.querySelector('#countdown'),t=nextTournament();if(el&&t)el.textContent=countdownText(t)},1000);
+<section id="players" class="view"><h1>Players</h1><div id="playersGrid" class="grid"></div></section>
 
-let deferredInstallPrompt=null;
-const installBanner=document.getElementById('installBanner');
-const installHelp=document.getElementById('installHelp');
-const installHelpText=document.getElementById('installHelpText');
-const isStandalone=window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
-function installationInstructions(){
-  const ua=navigator.userAgent.toLowerCase();
-  if(/iphone|ipad|ipod/.test(ua)) return '<p>On iPhone or iPad:</p><ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button.</li><li>Tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol>';
-  return '<p>On Android:</p><ol><li>Open this page in <b>Google Chrome</b>.</li><li>Tap Chrome’s <b>three-dot menu</b>.</li><li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Confirm the installation.</li></ol><p class="muted">Links opened inside Messages, Facebook, Gmail, or another app may use an in-app browser. Choose <b>Open in Chrome</b> first.</p>';
-}
-function showInstallHelp(){installHelpText.innerHTML=installationInstructions();installHelp.classList.add('open');}
-async function requestInstall(){
-  if(isStandalone){alert('Drawz Poker League is already installed on this device.');return;}
-  if(deferredInstallPrompt){
-    deferredInstallPrompt.prompt();
-    const result=await deferredInstallPrompt.userChoice;
-    if(result.outcome==='accepted') installBanner?.classList.remove('show');
-    deferredInstallPrompt=null;
-  } else showInstallHelp();
-}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;if(!isStandalone)installBanner?.classList.add('show');});
-document.getElementById('installBtn')?.addEventListener('click',requestInstall);
-document.getElementById('navInstallBtn')?.addEventListener('click',requestInstall);
-document.getElementById('dismissInstall')?.addEventListener('click',()=>installBanner?.classList.remove('show'));
-document.getElementById('closeInstallHelp')?.addEventListener('click',()=>installHelp?.classList.remove('open'));
-installHelp?.addEventListener('click',e=>{if(e.target===installHelp)installHelp.classList.remove('open')});
-window.addEventListener('appinstalled',()=>{installBanner?.classList.remove('show');document.getElementById('navInstallBtn')?.remove();});
-if(isStandalone){installBanner?.classList.remove('show');document.getElementById('navInstallBtn')?.remove();}
-if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+<section id="admin" class="view">
+<h1>Admin Control Center</h1>
+<div class="card" id="loginCard">
+<h2 style="margin-top:0">Administrator sign-in</h2>
+<form id="loginForm" class="row">
+<label><small>Email</small><input name="email" type="email" autocomplete="username" required></label>
+<label><small>Password</small><input name="password" type="password" autocomplete="current-password" required></label>
+<div class="actions"><button class="btn" type="submit">Sign In</button></div>
+</form><div id="loginMessage" class="muted"></div>
+</div>
 
-</script>
+<div class="locked-content">
+<div class="notice">Professional Admin v2 · Signed in as <b id="signedInEmail"></b> <button id="signOutBtn" class="btn alt small" style="float:right">Sign Out</button></div>
+<div class="admin-shell">
+<div class="admin-tabs">
+<button class="active" data-admin-panel="dashboardPanel">Dashboard</button>
+<button data-admin-panel="playersPanel">Players</button>
+<button data-admin-panel="tournamentsPanel">Tournaments</button>
+<button data-admin-panel="resultsPanel">Results</button>
+<button data-admin-panel="announcementsPanel">Announcements</button>
+</div>
+<div>
+<div id="dashboardPanel" class="admin-panel active"><div id="adminStats" class="grid"></div></div>
+
+<div id="playersPanel" class="admin-panel">
+<div class="card"><h2 style="margin-top:0">Add player</h2><form id="addPlayerForm" class="row">
+<label><small>ClubGG nickname</small><input name="username" required></label>
+<label><small>Display name</small><input name="displayName" required></label>
+<div class="actions"><button class="btn">Add Player</button></div></form></div>
+<div class="card"><h2 style="margin-top:0">Manage players</h2><div id="playerManager"></div></div>
+</div>
+
+<div id="tournamentsPanel" class="admin-panel">
+<div class="card"><h2 style="margin-top:0">Create tournament</h2><form id="addTournamentForm">
+<div class="row"><label><small>Title</small><input name="title" value="Drawz Poker League Daily" required></label>
+<label><small>Date and time</small><input name="startsAt" type="datetime-local" required></label></div>
+<div class="row"><label><small>ClubGG Club ID</small><input name="clubId" value="490160"></label>
+<label><small>Game/table code</small><input name="externalId"></label></div>
+<label><small>Join note or password</small><input name="note"></label>
+<button class="btn">Create Tournament</button></form></div>
+<div class="card"><h2 style="margin-top:0">Manage tournaments</h2><div id="tournamentManager"></div></div>
+</div>
+
+<div id="resultsPanel" class="admin-panel">
+<div class="card"><h2 style="margin-top:0">Record a result</h2><form id="resultForm">
+<div class="row"><label><small>Tournament</small><select name="tournamentId" id="resultTournament" required></select></label>
+<label><small>Player</small><select name="playerId" id="resultPlayer" required></select></label></div>
+<div class="row"><label><small>Finishing position</small><input name="finish" type="number" min="1" required></label>
+<label><small>Points awarded</small><input name="points" type="number" required></label></div>
+<button class="btn">Save Result</button></form></div>
+<div class="card"><h2 style="margin-top:0">Recent results</h2><div id="resultsManager"></div></div>
+</div>
+
+<div id="announcementsPanel" class="admin-panel">
+<div class="card"><h2 style="margin-top:0">Post announcement</h2><form id="announcementForm">
+<label><small>Headline</small><input name="title" required></label>
+<label><small>Message</small><textarea name="body" rows="4" required></textarea></label>
+<button class="btn">Publish Announcement</button></form></div>
+<div class="card"><h2 style="margin-top:0">Manage announcements</h2><div id="announcementManager"></div></div>
+</div>
+</div></div></div>
+</section>
+</main>
+
+<button id="installBtn" class="btn install">Install App</button>
+
 <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-auth-compat.js"></script>
 <script>
-// Drawz Poker League — live Cloud Firestore connection
 const firebaseConfig = {
   apiKey: "AIzaSyATsnmj-Y206mh8BCZqK1ZeBnkJKLECkPI",
   authDomain: "drawz-poker-league.firebaseapp.com",
@@ -137,198 +136,91 @@ const firebaseConfig = {
   messagingSenderId: "405551721329",
   appId: "1:405551721329:web:88780b37f34d4e7ac6a4d0"
 };
-
 firebase.initializeApp(firebaseConfig);
-const cloudDb = firebase.firestore();
-let cloudPlayersLoaded = false;
+const db=firebase.firestore(), auth=firebase.auth();
+let players=[], tournaments=[], announcements=[], results=[], deferredPrompt=null;
 
-function cloudStandingRows(){
-  return db.players.map(p => ({
-    ...p,
-    points: Number(p.points || 0),
-    played: Number(p.gamesPlayed || 0),
-    wins: Number(p.wins || 0),
-    podiums: Number(p.podiums || 0),
-    avg: p.averageFinish == null ? null : Number(p.averageFinish)
-  })).sort((a,b) => b.points-a.points || b.wins-a.wins || a.username.localeCompare(b.username));
-}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate=v=>{if(!v)return 'TBA'; const d=v.toDate?v.toDate():new Date(v); return d.toLocaleString([],{dateStyle:'medium',timeStyle:'short'})};
+const sortedPlayers=()=>[...players].sort((a,b)=>(b.points||0)-(a.points||0)||(b.wins||0)-(a.wins||0)||String(a.displayName).localeCompare(String(b.displayName)));
 
-function setCloudStatus(message, isError=false){
-  let box=document.getElementById('firebaseStatus');
-  if(!box){
-    box=document.createElement('div');
-    box.id='firebaseStatus';
-    box.className='notice';
-    box.style.margin='12px 0';
-    const admin=document.getElementById('admin');
-    if(admin) admin.insertBefore(box, admin.children[1] || null);
-  }
-  box.style.borderLeftColor=isError?'#ff5353':'#7cff00';
-  box.textContent=message;
-}
-
-cloudDb.collection('players').onSnapshot(snapshot => {
-  db.players = snapshot.docs.map(doc => {
-    const p=doc.data() || {};
-    const name=String(p.name || p.username || 'Unnamed Player');
-    return {
-      id: doc.id,
-      username: String(p.username || name),
-      displayName: String(p.displayName || name),
-      rating: Number(p.rating || 1500),
-      points: Number(p.points || 0),
-      gamesPlayed: Number(p.gamesPlayed || p.gamesplayed || 0),
-      wins: Number(p.wins || 0),
-      podiums: Number(p.podiums || 0),
-      averageFinish: p.averageFinish ?? null,
-      cloud: true
-    };
-  });
-  standings = cloudStandingRows;
-  cloudPlayersLoaded = true;
-  setCloudStatus(`Firebase connected — ${db.players.length} live player${db.players.length===1?'':'s'} loaded.`);
-  render();
-  renderLivePlayerManager();
-}, error => {
-  console.error('Firestore players error', error);
-  setCloudStatus('Firebase could not load the players collection: '+error.message, true);
+document.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
+ document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===btn));
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===btn.dataset.view));
+});
+document.querySelectorAll('[data-admin-panel]').forEach(btn=>btn.onclick=()=>{
+ document.querySelectorAll('[data-admin-panel]').forEach(x=>x.classList.toggle('active',x===btn));
+ document.querySelectorAll('.admin-panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.adminPanel));
 });
 
-// Add players from the existing Admin form directly to Firestore.
-const cloudPlayerForm=document.querySelector('#playerForm');
-if(cloudPlayerForm){
-  cloudPlayerForm.onsubmit=async event => {
-    event.preventDefault();
-    const form=new FormData(event.target);
-    const username=String(form.get('username') || '').trim();
-    const displayName=String(form.get('displayName') || '').trim();
-    if(!username || !displayName) return alert('Enter both the ClubGG nickname and display name.');
-    try{
-      const duplicate=await cloudDb.collection('players').where('username','==',username).limit(1).get();
-      if(!duplicate.empty) return alert('That ClubGG nickname already exists.');
-      await cloudDb.collection('players').add({
-        username,
-        name: displayName,
-        displayName,
-        points: 0,
-        gamesPlayed: 0,
-        wins: 0,
-        podiums: 0,
-        rating: 1500,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      event.target.reset();
-      alert('Player added to the live Firebase database.');
-    }catch(error){
-      console.error(error);
-      alert('Could not add the player: '+error.message);
-    }
-  };
+function renderPublic(){
+ const rows=sortedPlayers();
+ document.getElementById('memberCount').textContent=players.length;
+ document.getElementById('currentLeader').textContent=rows[0]?.displayName||rows[0]?.username||'—';
+ document.getElementById('leaderPoints').textContent=`${rows[0]?.points||0} points`;
+ document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username)}</b><div class="muted">${esc(p.username||'')}</div></td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
+ document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>`<div class="card"><h2 style="margin-top:0">${esc(p.displayName||p.username)}</h2><p class="muted">${esc(p.username||'')}</p><div class="stat">${p.points||0}</div><p>Points · ${p.wins||0} wins · ${p.gamesPlayed||0} played</p></div>`).join(''):'<div class="notice">No players yet.</div>';
+ const upcoming=[...tournaments].filter(t=>{const d=t.startsAt?.toDate?t.startsAt.toDate():new Date(t.startsAt);return d>=new Date()}).sort((a,b)=>((a.startsAt?.seconds||0)-(b.startsAt?.seconds||0)));
+ const next=upcoming[0];
+ document.getElementById('nextTournament').textContent=next?fmtDate(next.startsAt):'TBA';
+ document.getElementById('nextTournamentDetail').textContent=next?`${next.title} · Club ${next.clubId||'490160'}${next.externalId?' · Code '+next.externalId:''}`:'No tournament scheduled.';
+ document.getElementById('scheduleGrid').innerHTML=tournaments.length?[...tournaments].sort((a,b)=>(b.startsAt?.seconds||0)-(a.startsAt?.seconds||0)).map(t=>`<div class="card"><h2 style="margin-top:0">${esc(t.title)}</h2><div class="stat" style="font-size:24px">${fmtDate(t.startsAt)}</div><p class="muted">Club ID: ${esc(t.clubId||'490160')}${t.externalId?' · Code '+esc(t.externalId):''}</p><p>${esc(t.note||'')}</p></div>`).join(''):'<div class="notice">No tournaments scheduled.</div>';
+ document.getElementById('announcementArea').innerHTML=announcements.slice(0,3).map(a=>`<div class="notice"><b>${esc(a.title)}</b><div class="muted">${esc(a.body)}</div></div>`).join('');
 }
 
-
-const auth = firebase.auth();
-const adminSection = document.getElementById('admin');
-const signedOutBox = document.getElementById('signedOutBox');
-const signedInBox = document.getElementById('signedInBox');
-const adminEmailEl = document.getElementById('adminEmail');
-const authMessage = document.getElementById('authMessage');
-const livePlayerManager = document.getElementById('livePlayerManager');
-
-function authNotice(message, isError=false){
-  authMessage.textContent = message || '';
-  authMessage.style.color = isError ? '#ff7777' : '#b8b8b8';
+function renderAdmin(){
+ const signed=!!auth.currentUser;
+ document.body.classList.toggle('admin-ready',signed);
+ document.getElementById('loginCard').style.display=signed?'none':'block';
+ document.getElementById('signedInEmail').textContent=auth.currentUser?.email||'';
+ document.getElementById('adminStats').innerHTML=`<div class="card"><h2>Players</h2><div class="stat">${players.length}</div></div><div class="card"><h2>Tournaments</h2><div class="stat">${tournaments.length}</div></div><div class="card"><h2>Results</h2><div class="stat">${results.length}</div></div>`;
+ document.getElementById('playerManager').innerHTML=players.length?sortedPlayers().map(p=>`<form class="list-row player-edit" data-id="${p.id}">
+ <label class="wide"><small>Display name</small><input name="displayName" value="${esc(p.displayName||p.username)}"></label>
+ <label><small>Nickname</small><input name="username" value="${esc(p.username||'')}"></label>
+ <label><small>Points</small><input name="points" type="number" value="${p.points||0}"></label>
+ <label><small>Played</small><input name="gamesPlayed" type="number" min="0" value="${p.gamesPlayed||0}"></label>
+ <label><small>Wins</small><input name="wins" type="number" min="0" value="${p.wins||0}"></label>
+ <div class="actions"><button class="btn small">Save</button><button type="button" class="btn red small delete-player">Delete</button></div></form>`).join(''):'<div class="muted">No players.</div>';
+ document.getElementById('tournamentManager').innerHTML=tournaments.length?tournaments.map(t=>`<form class="list-row tournament-edit" data-id="${t.id}">
+ <label class="wide"><small>Title</small><input name="title" value="${esc(t.title)}"></label>
+ <label><small>Date</small><input name="startsAt" type="datetime-local" value="${t.startsAt?.toDate?t.startsAt.toDate().toISOString().slice(0,16):''}"></label>
+ <label><small>Club</small><input name="clubId" value="${esc(t.clubId||'490160')}"></label>
+ <label><small>Code</small><input name="externalId" value="${esc(t.externalId||'')}"></label>
+ <label><small>Note</small><input name="note" value="${esc(t.note||'')}"></label>
+ <div class="actions"><button class="btn small">Save</button><button type="button" class="btn red small delete-tournament">Delete</button></div></form>`).join(''):'<div class="muted">No tournaments.</div>';
+ document.getElementById('resultTournament').innerHTML=tournaments.map(t=>`<option value="${t.id}">${esc(t.title)} — ${fmtDate(t.startsAt)}</option>`).join('');
+ document.getElementById('resultPlayer').innerHTML=sortedPlayers().map(p=>`<option value="${p.id}">${esc(p.displayName||p.username)}</option>`).join('');
+ document.getElementById('resultsManager').innerHTML=results.length?results.slice(0,30).map(r=>`<div class="notice">${esc(r.playerName)} — finish #${r.finish}, ${r.points} points <button class="btn red small delete-result" data-id="${r.id}" data-player="${r.playerId}" data-points="${r.points}" data-finish="${r.finish}">Delete</button></div>`).join(''):'<div class="muted">No results.</div>';
+ document.getElementById('announcementManager').innerHTML=announcements.length?announcements.map(a=>`<div class="notice"><b>${esc(a.title)}</b><p>${esc(a.body)}</p><button class="btn red small delete-announcement" data-id="${a.id}">Delete</button></div>`).join(''):'<div class="muted">No announcements.</div>';
+ bindAdminRows();
 }
 
-document.getElementById('adminLoginForm')?.addEventListener('submit', async event => {
-  event.preventDefault();
-  const form = new FormData(event.target);
-  const email = String(form.get('email') || '').trim();
-  const password = String(form.get('password') || '');
-  authNotice('Signing in…');
-  try{
-    await auth.signInWithEmailAndPassword(email, password);
-    event.target.reset();
-    authNotice('');
-  }catch(error){
-    console.error(error);
-    authNotice('Sign-in failed. Check the email and password and try again.', true);
-  }
-});
-
-document.getElementById('adminSignOutBtn')?.addEventListener('click', async () => {
-  await auth.signOut();
-});
-
-auth.onAuthStateChanged(user => {
-  const signedIn = !!user;
-  adminSection?.classList.toggle('admin-locked', !signedIn);
-  if(signedOutBox) signedOutBox.hidden = signedIn;
-  if(signedInBox) signedInBox.hidden = !signedIn;
-  if(adminEmailEl) adminEmailEl.textContent = user?.email || '';
-  authNotice(signedIn ? 'Administrator access is active.' : 'You must sign in before making changes.');
-  renderLivePlayerManager();
-});
-
-function renderLivePlayerManager(){
-  if(!livePlayerManager) return;
-  if(!auth.currentUser){
-    livePlayerManager.innerHTML='<div class="empty">Sign in to manage players.</div>';
-    return;
-  }
-  const rows = cloudStandingRows();
-  if(!rows.length){
-    livePlayerManager.innerHTML='<div class="empty">No players have been added.</div>';
-    return;
-  }
-  livePlayerManager.innerHTML = rows.map(player => `
-    <form class="player-admin-row" data-player-id="${esc(player.id)}">
-      <label class="player-name"><small>Player</small><input name="displayName" value="${esc(player.displayName || player.username)}" required></label>
-      <label><small>Points</small><input type="number" name="points" value="${Number(player.points||0)}" required></label>
-      <label><small>Played</small><input type="number" min="0" name="gamesPlayed" value="${Number(player.gamesPlayed||0)}" required></label>
-      <label><small>Wins</small><input type="number" min="0" name="wins" value="${Number(player.wins||0)}" required></label>
-      <div class="actions">
-        <button class="btn small" type="submit">Save</button>
-        <button class="btn red small delete-live-player" type="button">Delete</button>
-      </div>
-    </form>
-  `).join('');
-
-  livePlayerManager.querySelectorAll('.player-admin-row').forEach(form => {
-    form.addEventListener('submit', async event => {
-      event.preventDefault();
-      if(!auth.currentUser) return alert('Please sign in first.');
-      const id = form.dataset.playerId;
-      const data = new FormData(form);
-      try{
-        await cloudDb.collection('players').doc(id).update({
-          name: String(data.get('displayName') || '').trim(),
-          displayName: String(data.get('displayName') || '').trim(),
-          points: Number(data.get('points') || 0),
-          gamesPlayed: Number(data.get('gamesPlayed') || 0),
-          wins: Number(data.get('wins') || 0),
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        alert('Player updated.');
-      }catch(error){
-        console.error(error);
-        alert('Could not update the player: ' + error.message);
-      }
-    });
-    form.querySelector('.delete-live-player')?.addEventListener('click', async () => {
-      if(!auth.currentUser) return alert('Please sign in first.');
-      const id = form.dataset.playerId;
-      const playerName = form.querySelector('[name="displayName"]')?.value || 'this player';
-      if(!confirm(`Delete ${playerName}? This cannot be undone.`)) return;
-      try{
-        await cloudDb.collection('players').doc(id).delete();
-      }catch(error){
-        console.error(error);
-        alert('Could not delete the player: ' + error.message);
-      }
-    });
-  });
+function bindAdminRows(){
+ document.querySelectorAll('.player-edit').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const x=new FormData(f);await db.collection('players').doc(f.dataset.id).update({displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),username:x.get('username').trim(),points:Number(x.get('points')),gamesPlayed:Number(x.get('gamesPlayed')),wins:Number(x.get('wins')),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})});
+ document.querySelectorAll('.delete-player').forEach(b=>b.onclick=async()=>{if(confirm('Delete this player?'))await db.collection('players').doc(b.closest('form').dataset.id).delete()});
+ document.querySelectorAll('.tournament-edit').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const x=new FormData(f);await db.collection('tournaments').doc(f.dataset.id).update({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})});
+ document.querySelectorAll('.delete-tournament').forEach(b=>b.onclick=async()=>{if(confirm('Delete this tournament?'))await db.collection('tournaments').doc(b.closest('form').dataset.id).delete()});
+ document.querySelectorAll('.delete-announcement').forEach(b=>b.onclick=async()=>{if(confirm('Delete this announcement?'))await db.collection('announcements').doc(b.dataset.id).delete()});
+ document.querySelectorAll('.delete-result').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this result and reverse its totals?'))return; const batch=db.batch();const p=db.collection('players').doc(b.dataset.player);batch.delete(db.collection('results').doc(b.dataset.id));batch.update(p,{points:firebase.firestore.FieldValue.increment(-Number(b.dataset.points)),gamesPlayed:firebase.firestore.FieldValue.increment(-1),wins:firebase.firestore.FieldValue.increment(Number(b.dataset.finish)===1?-1:0)});await batch.commit()});
 }
 
+db.collection('players').onSnapshot(s=>{players=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()});
+db.collection('tournaments').onSnapshot(s=>{tournaments=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()});
+db.collection('announcements').orderBy('createdAt','desc').onSnapshot(s=>{announcements=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()},()=>db.collection('announcements').onSnapshot(s=>{announcements=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()}));
+db.collection('results').orderBy('createdAt','desc').limit(100).onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()},()=>db.collection('results').onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()}));
+
+document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);const m=document.getElementById('loginMessage');m.textContent='Signing in…';try{await auth.signInWithEmailAndPassword(x.get('email').trim(),x.get('password'));e.target.reset();m.textContent=''}catch(err){m.textContent='Sign-in failed. Check the email and password.'}};
+document.getElementById('signOutBtn').onclick=()=>auth.signOut();
+auth.onAuthStateChanged(()=>renderAdmin());
+
+document.getElementById('addPlayerForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('players').add({username:x.get('username').trim(),displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),points:0,gamesPlayed:0,wins:0,podiums:0,rating:1500,createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
+document.getElementById('addTournamentForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('tournaments').add({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
+document.getElementById('announcementForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('announcements').add({title:x.get('title').trim(),body:x.get('body').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
+document.getElementById('resultForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target),player=players.find(p=>p.id===x.get('playerId')),finish=Number(x.get('finish')),points=Number(x.get('points'));if(!player)return;const batch=db.batch();const resultRef=db.collection('results').doc();batch.set(resultRef,{tournamentId:x.get('tournamentId'),playerId:player.id,playerName:player.displayName||player.username,finish,points,createdAt:firebase.firestore.FieldValue.serverTimestamp()});batch.update(db.collection('players').doc(player.id),{points:firebase.firestore.FieldValue.increment(points),gamesPlayed:firebase.firestore.FieldValue.increment(1),wins:firebase.firestore.FieldValue.increment(finish===1?1:0),podiums:firebase.firestore.FieldValue.increment(finish<=3?1:0)});await batch.commit();e.target.reset()};
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
+document.getElementById('installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else alert('Open Chrome’s three-dot menu and tap Install app or Add to Home screen.')};
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+renderPublic();renderAdmin();
 </script>
 </body></html>
