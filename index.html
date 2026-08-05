@@ -142,7 +142,7 @@ let players=[], tournaments=[], announcements=[], results=[], deferredPrompt=nul
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDate=v=>{if(!v)return 'TBA'; const d=v.toDate?v.toDate():new Date(v); return d.toLocaleString([],{dateStyle:'medium',timeStyle:'short'})};
-const sortedPlayers=()=>[...players].sort((a,b)=>(b.points||0)-(a.points||0)||(b.wins||0)-(a.wins||0)||String(a.displayName).localeCompare(String(b.displayName)));
+const sortedPlayers=()=>[...players].sort((a,b)=>(b.points||0)-(a.points||0)||(b.wins||0)-(a.wins||0)||String(a.displayName||a.username||a.name||'').localeCompare(String(b.displayName||b.username||b.name||'')));
 
 document.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
  document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===btn));
@@ -156,10 +156,10 @@ document.querySelectorAll('[data-admin-panel]').forEach(btn=>btn.onclick=()=>{
 function renderPublic(){
  const rows=sortedPlayers();
  document.getElementById('memberCount').textContent=players.length;
- document.getElementById('currentLeader').textContent=rows[0]?.displayName||rows[0]?.username||'—';
+ document.getElementById('currentLeader').textContent=rows[0]?.displayName||rows[0]?.username||rows[0]?.name||'—';
  document.getElementById('leaderPoints').textContent=`${rows[0]?.points||0} points`;
- document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username)}</b><div class="muted">${esc(p.username||'')}</div></td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
- document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>`<div class="card"><h2 style="margin-top:0">${esc(p.displayName||p.username)}</h2><p class="muted">${esc(p.username||'')}</p><div class="stat">${p.points||0}</div><p>Points · ${p.wins||0} wins · ${p.gamesPlayed||0} played</p></div>`).join(''):'<div class="notice">No players yet.</div>';
+ document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username||p.name||'Unknown Player')}</b><div class="muted">${esc(p.username||'')}</div></td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
+ document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>`<div class="card"><h2 style="margin-top:0">${esc(p.displayName||p.username||p.name||'Unknown Player')}</h2><p class="muted">${esc(p.username||'')}</p><div class="stat">${p.points||0}</div><p>Points · ${p.wins||0} wins · ${p.gamesPlayed||0} played</p></div>`).join(''):'<div class="notice">No players yet.</div>';
  const upcoming=[...tournaments].filter(t=>{const d=t.startsAt?.toDate?t.startsAt.toDate():new Date(t.startsAt);return d>=new Date()}).sort((a,b)=>((a.startsAt?.seconds||0)-(b.startsAt?.seconds||0)));
  const next=upcoming[0];
  document.getElementById('nextTournament').textContent=next?fmtDate(next.startsAt):'TBA';
@@ -175,7 +175,7 @@ function renderAdmin(){
  document.getElementById('signedInEmail').textContent=auth.currentUser?.email||'';
  document.getElementById('adminStats').innerHTML=`<div class="card"><h2>Players</h2><div class="stat">${players.length}</div></div><div class="card"><h2>Tournaments</h2><div class="stat">${tournaments.length}</div></div><div class="card"><h2>Results</h2><div class="stat">${results.length}</div></div>`;
  document.getElementById('playerManager').innerHTML=players.length?sortedPlayers().map(p=>`<form class="list-row player-edit" data-id="${p.id}">
- <label class="wide"><small>Display name</small><input name="displayName" value="${esc(p.displayName||p.username)}"></label>
+ <label class="wide"><small>Display name</small><input name="displayName" value="${esc(p.displayName||p.username||p.name||'Unknown Player')}"></label>
  <label><small>Nickname</small><input name="username" value="${esc(p.username||'')}"></label>
  <label><small>Points</small><input name="points" type="number" value="${p.points||0}"></label>
  <label><small>Played</small><input name="gamesPlayed" type="number" min="0" value="${p.gamesPlayed||0}"></label>
@@ -189,7 +189,7 @@ function renderAdmin(){
  <label><small>Note</small><input name="note" value="${esc(t.note||'')}"></label>
  <div class="actions"><button class="btn small">Save</button><button type="button" class="btn red small delete-tournament">Delete</button></div></form>`).join(''):'<div class="muted">No tournaments.</div>';
  document.getElementById('resultTournament').innerHTML=tournaments.map(t=>`<option value="${t.id}">${esc(t.title)} — ${fmtDate(t.startsAt)}</option>`).join('');
- document.getElementById('resultPlayer').innerHTML=sortedPlayers().map(p=>`<option value="${p.id}">${esc(p.displayName||p.username)}</option>`).join('');
+ document.getElementById('resultPlayer').innerHTML=sortedPlayers().map(p=>`<option value="${p.id}">${esc(p.displayName||p.username||p.name||'Unknown Player')}</option>`).join('');
  document.getElementById('resultsManager').innerHTML=results.length?results.slice(0,30).map(r=>`<div class="notice">${esc(r.playerName)} — finish #${r.finish}, ${r.points} points <button class="btn red small delete-result" data-id="${r.id}" data-player="${r.playerId}" data-points="${r.points}" data-finish="${r.finish}">Delete</button></div>`).join(''):'<div class="muted">No results.</div>';
  document.getElementById('announcementManager').innerHTML=announcements.length?announcements.map(a=>`<div class="notice"><b>${esc(a.title)}</b><p>${esc(a.body)}</p><button class="btn red small delete-announcement" data-id="${a.id}">Delete</button></div>`).join(''):'<div class="muted">No announcements.</div>';
  bindAdminRows();
@@ -216,7 +216,7 @@ auth.onAuthStateChanged(()=>renderAdmin());
 document.getElementById('addPlayerForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('players').add({username:x.get('username').trim(),displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),points:0,gamesPlayed:0,wins:0,podiums:0,rating:1500,createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('addTournamentForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('tournaments').add({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('announcementForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('announcements').add({title:x.get('title').trim(),body:x.get('body').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
-document.getElementById('resultForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target),player=players.find(p=>p.id===x.get('playerId')),finish=Number(x.get('finish')),points=Number(x.get('points'));if(!player)return;const batch=db.batch();const resultRef=db.collection('results').doc();batch.set(resultRef,{tournamentId:x.get('tournamentId'),playerId:player.id,playerName:player.displayName||player.username,finish,points,createdAt:firebase.firestore.FieldValue.serverTimestamp()});batch.update(db.collection('players').doc(player.id),{points:firebase.firestore.FieldValue.increment(points),gamesPlayed:firebase.firestore.FieldValue.increment(1),wins:firebase.firestore.FieldValue.increment(finish===1?1:0),podiums:firebase.firestore.FieldValue.increment(finish<=3?1:0)});await batch.commit();e.target.reset()};
+document.getElementById('resultForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target),player=players.find(p=>p.id===x.get('playerId')),finish=Number(x.get('finish')),points=Number(x.get('points'));if(!player)return;const batch=db.batch();const resultRef=db.collection('results').doc();batch.set(resultRef,{tournamentId:x.get('tournamentId'),playerId:player.id,playerName:player.displayName||player.username||player.name||'Unknown Player',finish,points,createdAt:firebase.firestore.FieldValue.serverTimestamp()});batch.update(db.collection('players').doc(player.id),{points:firebase.firestore.FieldValue.increment(points),gamesPlayed:firebase.firestore.FieldValue.increment(1),wins:firebase.firestore.FieldValue.increment(finish===1?1:0),podiums:firebase.firestore.FieldValue.increment(finish<=3?1:0)});await batch.commit();e.target.reset()};
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
 document.getElementById('installBtn').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else alert('Open Chrome’s three-dot menu and tap Install app or Add to Home screen.')};
