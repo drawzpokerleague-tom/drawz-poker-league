@@ -1,13 +1,18 @@
-# Drawz Poker League — ClubGG Fast Workflow
+# Drawz Poker League — Six Upgrades
 
-This update is designed around ClubGG's lack of a public integration API.
+This package adds:
 
-## Daily workflow
+1. Player avatars using an optional image URL, with automatic initials as a fallback.
+2. Gold, silver, and bronze medals for the top three standings.
+3. Average finish, final-table percentage, podiums, wins, and games played.
+4. Clickable player cards and standings rows with full player profiles.
+5. A Tournament History page with each event's finishing order.
+6. A one-submit ClubGG results importer that updates every league statistic.
 
-1. Create and run the tournament inside ClubGG.
-2. Post the event details on the Drawz Poker League schedule.
-3. After the tournament, copy or type the final finishing order.
-4. Paste one ClubGG nickname per line into Quick Results.
-5. Submit once. The app updates points, games played, wins, podiums, and standings.
+## Normal workflow
 
-The importer stops before saving if a nickname does not match a registered player.
+1. Create and play the tournament in ClubGG.
+2. Post its details under Admin > ClubGG Events.
+3. After play ends, open Admin > Quick Results.
+4. Paste one ClubGG nickname per line in finishing order.
+5. Submit once.

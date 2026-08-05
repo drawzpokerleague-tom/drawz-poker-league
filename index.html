@@ -30,6 +30,17 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 .list-row{display:grid;grid-template-columns:1.4fr repeat(4,minmax(70px,.65fr)) auto;gap:8px;align-items:end;padding:12px 0;border-bottom:1px solid #252525} .list-row label{margin:0}
 .install{position:fixed;right:12px;bottom:12px;z-index:30}
 @media(max-width:760px){.wrap{padding:14px} .admin-shell{grid-template-columns:1fr} .admin-tabs{flex-direction:row;overflow-x:auto} .admin-tabs button{white-space:nowrap} .list-row{grid-template-columns:1fr 1fr} .list-row .wide,.list-row .actions{grid-column:1/-1} th,td{font-size:12px;padding:8px}}
+
+.avatar{width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--lime),#244b00);color:#000;font-weight:900;flex:0 0 auto;overflow:hidden;border:2px solid #365f0d}
+.avatar img{width:100%;height:100%;object-fit:cover}.avatar.sm{width:34px;height:34px;font-size:12px}.avatar.lg{width:86px;height:86px;font-size:28px}
+.player-cell{display:flex;align-items:center;gap:10px}.clickable{cursor:pointer}.clickable:hover{background:#111}
+.medal{font-size:22px;display:inline-block;min-width:27px}.profile-card{cursor:pointer;transition:transform .15s,border-color .15s}.profile-card:hover{transform:translateY(-2px);border-color:var(--lime)}
+.profile-head{display:flex;align-items:center;gap:16px}.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.mini-stat{background:#080808;border:1px solid #282828;border-radius:12px;padding:10px;text-align:center}.mini-stat b{display:block;color:var(--lime);font-size:22px}
+.history-event{margin-bottom:14px}.history-results{display:grid;gap:7px;margin-top:12px}.history-row{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;padding:9px;background:#080808;border-radius:9px}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:#000d;padding:18px;align-items:center;justify-content:center}.modal.open{display:flex}.modal-card{position:relative;width:min(620px,100%);max-height:90vh;overflow:auto;background:linear-gradient(180deg,#181818,#070707);border:1px solid var(--lime);border-radius:20px;padding:24px}.modal-close{position:absolute;right:10px;top:7px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer}
+.profile-history{margin-top:18px}.profile-result{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #282828}
+@media(max-width:600px){.mini-stats{grid-template-columns:1fr 1fr}.history-row{grid-template-columns:36px 1fr auto}.modal-card{padding:20px 15px}}
+
 </style>
 </head>
 <body>
@@ -39,6 +50,7 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 <button data-view="standings">Standings</button>
 <button data-view="schedule">Schedule</button>
 <button data-view="players">Players</button>
+<button data-view="history">History</button>
 <button data-view="admin">Admin</button>
 </div></nav>
 
@@ -56,7 +68,8 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 
 <section id="standings" class="view"><h1>Monthly Standings</h1><div id="standingsTable"></div></section>
 <section id="schedule" class="view"><h1>Tournament Schedule</h1><div id="scheduleGrid" class="grid"></div></section>
-<section id="players" class="view"><h1>Players</h1><div id="playersGrid" class="grid"></div></section>
+<section id="players" class="view"><h1>Players</h1><p class="muted">Tap any player to view their full profile.</p><div id="playersGrid" class="grid"></div></section>
+<section id="history" class="view"><h1>Tournament History</h1><div id="historyList"></div></section>
 
 <section id="admin" class="view">
 <h1>Admin Control Center</h1>
@@ -86,6 +99,7 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 <div class="card"><h2 style="margin-top:0">Add player</h2><form id="addPlayerForm" class="row">
 <label><small>ClubGG nickname</small><input name="username" required></label>
 <label><small>Display name</small><input name="displayName" required></label>
+<label><small>Avatar image URL (optional)</small><input name="avatarUrl" type="url" placeholder="https://..."></label>
 <div class="actions"><button class="btn">Add Player</button></div></form></div>
 <div class="card"><h2 style="margin-top:0">Manage players</h2><div id="playerManager"></div></div>
 </div>
@@ -110,9 +124,9 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 <textarea name="finishingOrder" rows="12" placeholder="PokerMike&#10;RiverQueen&#10;DrawzAce" required></textarea></label>
 <label><small>Optional custom points — comma separated. Leave blank to use the default DPL points.</small>
 <input name="customPoints" placeholder="100, 80, 65, 55, 50"></label>
-<div class="actions"><button class="btn" type="submit">Process Entire Tournament</button>
+<div class="actions"><button class="btn" type="submit">Import Results & Update Everything</button>
 <button class="btn alt" type="button" id="previewPointsBtn">Preview Default Points</button></div>
-<div id="bulkResultMessage" class="muted" style="margin-top:10px"></div>
+<div class="muted" style="margin-top:10px">This single import updates standings, wins, podiums, player profiles, statistics, and tournament history.</div><div id="bulkResultMessage" class="muted" style="margin-top:10px"></div>
 </form></div>
 <div class="card"><h2 style="margin-top:0">Recent results</h2><div id="resultsManager"></div></div>
 </div>
@@ -127,6 +141,14 @@ table{width:100%;border-collapse:collapse;background:#090909;border:1px solid va
 </div></div></div>
 </section>
 </main>
+
+
+<div id="playerModal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <button id="closePlayerModal" class="modal-close" aria-label="Close">×</button>
+    <div id="playerProfileContent"></div>
+  </div>
+</div>
 
 <button id="installBtn" class="btn install">Install App</button>
 
@@ -148,7 +170,24 @@ let players=[], tournaments=[], announcements=[], results=[], deferredPrompt=nul
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDate=v=>{if(!v)return 'TBA'; const d=v.toDate?v.toDate():new Date(v); return d.toLocaleString([],{dateStyle:'medium',timeStyle:'short'})};
-const sortedPlayers=()=>[...players].sort((a,b)=>(b.points||0)-(a.points||0)||(b.wins||0)-(a.wins||0)||String(a.displayName||a.username||a.name||'').localeCompare(String(b.displayName||b.username||b.name||'')));
+const sortedPlayers=()=>[...players].sort((a,b)=>(b.points||0)-(a.points||0)||(b.wins||0)-(a.wins||0)||String(playerName(a)).localeCompare(String(playerName(b))));
+
+const playerName=p=>p?.displayName||p?.username||p?.name||'Unknown Player';
+const playerInitials=p=>playerName(p).split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'?';
+const playerAvatar=(p,size='')=>p?.avatarUrl
+  ? `<span class="avatar ${size}"><img src="${esc(p.avatarUrl)}" alt=""></span>`
+  : `<span class="avatar ${size}">${esc(playerInitials(p))}</span>`;
+const playerResults=id=>results.filter(r=>r.playerId===id);
+const playerStats=p=>{
+  const r=playerResults(p.id);
+  const avg=r.length?r.reduce((sum,x)=>sum+Number(x.finish||0),0)/r.length:0;
+  const finalTables=r.length?r.filter(x=>Number(x.finish||999)<=9).length/r.length*100:0;
+  const podiums=r.filter(x=>Number(x.finish||999)<=3).length;
+  return {avg,finalTables,podiums,events:r.length};
+};
+const tournamentTitle=id=>tournaments.find(t=>t.id===id)?.title||'Tournament';
+const ordinal=n=>`${n}${n%100>=11&&n%100<=13?'th':n%10===1?'st':n%10===2?'nd':n%10===3?'rd':'th'}`;
+
 
 document.querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>{
  document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===btn));
@@ -162,16 +201,35 @@ document.querySelectorAll('[data-admin-panel]').forEach(btn=>btn.onclick=()=>{
 function renderPublic(){
  const rows=sortedPlayers();
  document.getElementById('memberCount').textContent=players.length;
- document.getElementById('currentLeader').textContent=rows[0]?.displayName||rows[0]?.username||rows[0]?.name||'—';
+ document.getElementById('currentLeader').textContent=playerName(rows[0]||{});
  document.getElementById('leaderPoints').textContent=`${rows[0]?.points||0} points`;
- document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th></tr></thead><tbody>${rows.map((p,i)=>`<tr><td>${i+1}</td><td><b>${esc(p.displayName||p.username||p.name||'Unknown Player')}</b><div class="muted">${esc(p.username||'')}</div></td><td>${p.points||0}</td><td>${p.gamesPlayed||0}</td><td>${p.wins||0}</td></tr>`).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
- document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>`<div class="card"><h2 style="margin-top:0">${esc(p.displayName||p.username||p.name||'Unknown Player')}</h2><p class="muted">${esc(p.username||'')}</p><div class="stat">${p.points||0}</div><p>Points · ${p.wins||0} wins · ${p.gamesPlayed||0} played</p></div>`).join(''):'<div class="notice">No players yet.</div>';
+
+ document.getElementById('standingsTable').innerHTML=rows.length?`<table><thead><tr><th>Rank</th><th>Player</th><th>Points</th><th>Played</th><th>Wins</th><th>Avg Finish</th><th>Final Table</th></tr></thead><tbody>${rows.map((p,i)=>{
+   const s=playerStats(p);
+   const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+   const subtitle=p.username&&p.username!==playerName(p)?`<div class="muted">${esc(p.username)}</div>`:'';
+   return `<tr class="clickable player-link" data-player="${p.id}"><td><span class="medal">${medal}</span>${i+1}</td><td><div class="player-cell">${playerAvatar(p,'sm')}<div><b>${esc(playerName(p))}</b>${subtitle}</div></div></td><td>${p.points||0}</td><td>${p.gamesPlayed||s.events||0}</td><td>${p.wins||0}</td><td>${s.avg?s.avg.toFixed(1):'—'}</td><td>${s.events?Math.round(s.finalTables)+'%':'—'}</td></tr>`;
+ }).join('')}</tbody></table>`:'<div class="notice">No players yet.</div>';
+
+ document.getElementById('playersGrid').innerHTML=rows.length?rows.map(p=>{
+   const s=playerStats(p);
+   return `<div class="card profile-card player-link" data-player="${p.id}"><div class="profile-head">${playerAvatar(p,'lg')}<div><h2 style="margin:0">${esc(playerName(p))}</h2><p class="muted" style="margin:5px 0">${esc(p.username||'')}</p></div></div><div class="mini-stats"><div class="mini-stat"><b>${p.points||0}</b>Points</div><div class="mini-stat"><b>${p.wins||0}</b>Wins</div><div class="mini-stat"><b>${s.avg?s.avg.toFixed(1):'—'}</b>Avg finish</div><div class="mini-stat"><b>${s.events?Math.round(s.finalTables)+'%':'—'}</b>Final table</div><div class="mini-stat"><b>${s.podiums}</b>Podiums</div><div class="mini-stat"><b>${p.gamesPlayed||s.events||0}</b>Played</div></div></div>`;
+ }).join(''):'<div class="notice">No players yet.</div>';
+
  const upcoming=[...tournaments].filter(t=>{const d=t.startsAt?.toDate?t.startsAt.toDate():new Date(t.startsAt);return d>=new Date()}).sort((a,b)=>((a.startsAt?.seconds||0)-(b.startsAt?.seconds||0)));
  const next=upcoming[0];
  document.getElementById('nextTournament').textContent=next?fmtDate(next.startsAt):'TBA';
  document.getElementById('nextTournamentDetail').textContent=next?`${next.title} · Club ${next.clubId||'490160'}${next.externalId?' · Code '+next.externalId:''}`:'No tournament scheduled.';
- document.getElementById('scheduleGrid').innerHTML=tournaments.length?[...tournaments].sort((a,b)=>(b.startsAt?.seconds||0)-(a.startsAt?.seconds||0)).map(t=>`<div class="card"><h2 style="margin-top:0">${esc(t.title)}</h2><div class="stat" style="font-size:24px">${fmtDate(t.startsAt)}</div><p class="muted">Club ID: ${esc(t.clubId||'490160')}${t.externalId?' · Code '+esc(t.externalId):''}</p><p>${esc(t.note||'')}</p></div>`).join(''):'<div class="notice">No tournaments scheduled.</div>';
+ document.getElementById('scheduleGrid').innerHTML=tournaments.length?[...tournaments].sort((a,b)=>(b.startsAt?.seconds||0)-(a.startsAt?.seconds||0)).map(t=>`<div class="card"><h2 style="margin-top:0">${esc(t.title)}</h2><div class="stat" style="font-size:24px">${fmtDate(t.startsAt)}</div><p class="muted">Club ID: ${esc(t.clubId||'490160')}${t.externalId?' · Code '+esc(t.externalId):''}</p><p>${esc(t.note||'')}</p>${t.status==='completed'?'<span class="badge">Completed</span>':''}</div>`).join(''):'<div class="notice">No tournaments scheduled.</div>';
  document.getElementById('announcementArea').innerHTML=announcements.slice(0,3).map(a=>`<div class="notice"><b>${esc(a.title)}</b><div class="muted">${esc(a.body)}</div></div>`).join('');
+
+ const completed=[...tournaments].filter(t=>results.some(r=>r.tournamentId===t.id)||t.status==='completed').sort((a,b)=>(b.startsAt?.seconds||0)-(a.startsAt?.seconds||0));
+ document.getElementById('historyList').innerHTML=completed.length?completed.map(t=>{
+   const eventResults=results.filter(r=>r.tournamentId===t.id).sort((a,b)=>Number(a.finish)-Number(b.finish));
+   return `<div class="card history-event"><h2 style="margin:0">${esc(t.title)}</h2><p class="muted">${fmtDate(t.startsAt)} · ${eventResults.length||t.entrantCount||0} players</p><div class="history-results">${eventResults.length?eventResults.map(r=>`<div class="history-row"><b>${ordinal(Number(r.finish))}</b><span>${esc(r.playerName)}</span><strong>${Number(r.points||0)} pts</strong></div>`).join(''):'<div class="muted">No detailed results saved.</div>'}</div></div>`;
+ }).join(''):'<div class="notice">No completed tournaments yet.</div>';
+
+ bindPlayerLinks();
 }
 
 function renderAdmin(){
@@ -179,10 +237,11 @@ function renderAdmin(){
  document.body.classList.toggle('admin-ready',signed);
  document.getElementById('loginCard').style.display=signed?'none':'block';
  document.getElementById('signedInEmail').textContent=auth.currentUser?.email||'';
- document.getElementById('adminStats').innerHTML=`<div class="card"><h2>Players</h2><div class="stat">${players.length}</div></div><div class="card"><h2>Tournaments</h2><div class="stat">${tournaments.length}</div></div><div class="card"><h2>Results</h2><div class="stat">${results.length}</div></div>`;
+ document.getElementById('adminStats').innerHTML=`<div class="card"><h2>Players</h2><div class="stat">${players.length}</div></div><div class="card"><h2>Tournaments</h2><div class="stat">${tournaments.length}</div></div><div class="card"><h2>Results</h2><div class="stat">${results.length}</div></div><div class="card"><h2>Completed Events</h2><div class="stat">${new Set(results.map(r=>r.tournamentId).filter(Boolean)).size}</div></div>`;
  document.getElementById('playerManager').innerHTML=players.length?sortedPlayers().map(p=>`<form class="list-row player-edit" data-id="${p.id}">
  <label class="wide"><small>Display name</small><input name="displayName" value="${esc(p.displayName||p.username||p.name||'Unknown Player')}"></label>
  <label><small>Nickname</small><input name="username" value="${esc(p.username||'')}"></label>
+ <label class="wide"><small>Avatar URL</small><input name="avatarUrl" value="${esc(p.avatarUrl||'')}" placeholder="https://..."></label>
  <label><small>Points</small><input name="points" type="number" value="${p.points||0}"></label>
  <label><small>Played</small><input name="gamesPlayed" type="number" min="0" value="${p.gamesPlayed||0}"></label>
  <label><small>Wins</small><input name="wins" type="number" min="0" value="${p.wins||0}"></label>
@@ -201,28 +260,54 @@ function renderAdmin(){
 }
 
 function bindAdminRows(){
- document.querySelectorAll('.player-edit').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const x=new FormData(f);await db.collection('players').doc(f.dataset.id).update({displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),username:x.get('username').trim(),points:Number(x.get('points')),gamesPlayed:Number(x.get('gamesPlayed')),wins:Number(x.get('wins')),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})});
+ document.querySelectorAll('.player-edit').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const x=new FormData(f);await db.collection('players').doc(f.dataset.id).update({displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),username:x.get('username').trim(),avatarUrl:x.get('avatarUrl').trim(),points:Number(x.get('points')),gamesPlayed:Number(x.get('gamesPlayed')),wins:Number(x.get('wins')),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})});
  document.querySelectorAll('.delete-player').forEach(b=>b.onclick=async()=>{if(confirm('Delete this player?'))await db.collection('players').doc(b.closest('form').dataset.id).delete()});
  document.querySelectorAll('.tournament-edit').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const x=new FormData(f);await db.collection('tournaments').doc(f.dataset.id).update({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()})});
  document.querySelectorAll('.delete-tournament').forEach(b=>b.onclick=async()=>{if(confirm('Delete this tournament?'))await db.collection('tournaments').doc(b.closest('form').dataset.id).delete()});
  document.querySelectorAll('.delete-announcement').forEach(b=>b.onclick=async()=>{if(confirm('Delete this announcement?'))await db.collection('announcements').doc(b.dataset.id).delete()});
- document.querySelectorAll('.delete-result').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this result and reverse its totals?'))return; const batch=db.batch();const p=db.collection('players').doc(b.dataset.player);batch.delete(db.collection('results').doc(b.dataset.id));batch.update(p,{points:firebase.firestore.FieldValue.increment(-Number(b.dataset.points)),gamesPlayed:firebase.firestore.FieldValue.increment(-1),wins:firebase.firestore.FieldValue.increment(Number(b.dataset.finish)===1?-1:0)});await batch.commit()});
+ document.querySelectorAll('.delete-result').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this result and reverse its totals?'))return; const batch=db.batch();const p=db.collection('players').doc(b.dataset.player);batch.delete(db.collection('results').doc(b.dataset.id));batch.update(p,{points:firebase.firestore.FieldValue.increment(-Number(b.dataset.points)),gamesPlayed:firebase.firestore.FieldValue.increment(-1),wins:firebase.firestore.FieldValue.increment(Number(b.dataset.finish)===1?-1:0),podiums:firebase.firestore.FieldValue.increment(Number(b.dataset.finish)<=3?-1:0)});await batch.commit()});
 }
 
 db.collection('players').onSnapshot(s=>{players=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()});
 db.collection('tournaments').onSnapshot(s=>{tournaments=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()});
 db.collection('announcements').orderBy('createdAt','desc').onSnapshot(s=>{announcements=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()},()=>db.collection('announcements').onSnapshot(s=>{announcements=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()}));
-db.collection('results').orderBy('createdAt','desc').limit(100).onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()},()=>db.collection('results').onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderAdmin()}));
+db.collection('results').orderBy('createdAt','desc').limit(100).onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()},()=>db.collection('results').onSnapshot(s=>{results=s.docs.map(d=>({id:d.id,...d.data()}));renderPublic();renderAdmin()}));
 
 document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);const m=document.getElementById('loginMessage');m.textContent='Signing in…';try{await auth.signInWithEmailAndPassword(x.get('email').trim(),x.get('password'));e.target.reset();m.textContent=''}catch(err){m.textContent='Sign-in failed. Check the email and password.'}};
 document.getElementById('signOutBtn').onclick=()=>auth.signOut();
 auth.onAuthStateChanged(()=>renderAdmin());
 
-document.getElementById('addPlayerForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('players').add({username:x.get('username').trim(),displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),points:0,gamesPlayed:0,wins:0,podiums:0,rating:1500,createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
+document.getElementById('addPlayerForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('players').add({username:x.get('username').trim(),displayName:x.get('displayName').trim(),name:x.get('displayName').trim(),avatarUrl:x.get('avatarUrl').trim(),points:0,gamesPlayed:0,wins:0,podiums:0,rating:1500,createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('addTournamentForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('tournaments').add({title:x.get('title').trim(),startsAt:firebase.firestore.Timestamp.fromDate(new Date(x.get('startsAt'))),clubId:x.get('clubId').trim(),externalId:x.get('externalId').trim(),note:x.get('note').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 document.getElementById('announcementForm').onsubmit=async e=>{e.preventDefault();const x=new FormData(e.target);await db.collection('announcements').add({title:x.get('title').trim(),body:x.get('body').trim(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});e.target.reset()};
 
 
+
+
+function bindPlayerLinks(){
+ document.querySelectorAll('.player-link').forEach(el=>el.onclick=()=>openPlayerProfile(el.dataset.player));
+}
+function openPlayerProfile(id){
+ const p=players.find(x=>x.id===id); if(!p)return;
+ const s=playerStats(p);
+ const history=playerResults(id).sort((a,b)=>{
+   const ad=a.createdAt?.seconds||0, bd=b.createdAt?.seconds||0; return bd-ad;
+ });
+ document.getElementById('playerProfileContent').innerHTML=`
+   <div class="profile-head">${playerAvatar(p,'lg')}<div><h1 style="font-size:34px;margin:0">${esc(playerName(p))}</h1><p class="muted">${esc(p.username||'')}</p></div></div>
+   <div class="mini-stats">
+     <div class="mini-stat"><b>${p.points||0}</b>Points</div>
+     <div class="mini-stat"><b>${p.wins||0}</b>Wins</div>
+     <div class="mini-stat"><b>${s.podiums}</b>Podiums</div>
+     <div class="mini-stat"><b>${s.avg?s.avg.toFixed(1):'—'}</b>Avg finish</div>
+     <div class="mini-stat"><b>${s.events?Math.round(s.finalTables)+'%':'—'}</b>Final table</div>
+     <div class="mini-stat"><b>${p.gamesPlayed||s.events||0}</b>Played</div>
+   </div>
+   <div class="profile-history"><h2>Recent tournaments</h2>${history.length?history.slice(0,20).map(r=>`<div class="profile-result"><span>${esc(tournamentTitle(r.tournamentId))}<br><small class="muted">${r.createdAt?fmtDate(r.createdAt):''}</small></span><strong>${ordinal(Number(r.finish))} · ${Number(r.points||0)} pts</strong></div>`).join(''):'<p class="muted">No tournament history yet.</p>'}</div>`;
+ const modal=document.getElementById('playerModal'); modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+}
+document.getElementById('closePlayerModal').onclick=()=>{const m=document.getElementById('playerModal');m.classList.remove('open');m.setAttribute('aria-hidden','true')};
+document.getElementById('playerModal').onclick=e=>{if(e.target.id==='playerModal')document.getElementById('closePlayerModal').click()};
 
 const defaultDplPoints = finish => {
   const fixed = [100,80,65,55,50,45,40,35,30,25,22,20,18,16,14,12,10,8,7,6];
